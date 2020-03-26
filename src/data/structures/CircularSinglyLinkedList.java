@@ -44,7 +44,7 @@ public class CircularSinglyLinkedList {
 		ListNode node = new ListNode(data);
 		if (last == null) {
 			last = node;
-		}else {
+		}else {		
 			node.next = last.next;
 		}
 		last.next = node;

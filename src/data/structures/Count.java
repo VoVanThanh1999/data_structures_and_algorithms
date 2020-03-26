@@ -2,7 +2,6 @@ package data.structures;
 
 import java.util.HashMap;
 import java.util.Map;
-
 public class Count {
 	static	int commonCharacterCount(String s1, String s2){
 		 int dem = 0;
@@ -128,13 +127,36 @@ public class Count {
 
 	}
 
+	static int differentSubstringsTrie(String inputString){
+		try {
+			int count = 0;
+			Map<String, Integer> map = new HashMap<>();
+			for (int i = 1; i <= inputString.length(); i++) {
+				count = i;
+				for (int j = 0; j <=inputString.length(); j++) {					
+					if (count <= inputString.length()) {
+						map.put(inputString.substring(j, count), i);
+						count = count+1;
+					}
+				}
+			}
+			return map.size();
+		
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return -1;
+	}
 
 	
 	public static void main(String[] args) {
 		
-		int a[] = {1, 2, 2, 3, 1, 3, 1, 3};
+		String inputString = "abac";
 		
-		System.out.println(checkEqualFrequency(a));
+		
+		
+		System.out.println(differentSubstringsTrie(inputString));
 	}
 
 }
