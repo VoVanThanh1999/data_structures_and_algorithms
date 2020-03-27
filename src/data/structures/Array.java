@@ -194,7 +194,13 @@ public class Array {
 		return null;
 	}
 
-
+	
+	static	int circleRotation(int[] arr, long d) {
+		
+		return arr[(int) d];
+	}
+	
+	
 	
 	public static void main(String[] args) {
 		int a [] = {-1,-3};
