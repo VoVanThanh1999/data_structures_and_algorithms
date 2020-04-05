@@ -1,44 +1,49 @@
 package data.structures;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
 public class Count {
-	static	int commonCharacterCount(String s1, String s2){
-		 int dem = 0;
-		    StringBuilder sb1 = new StringBuilder(s1);
-		    StringBuilder sb2 = new StringBuilder(s2);
-		    for (int i = 0; i < sb1.length(); i++) {
-				for (int j = 0; j < sb2.length(); j++) {
-					char a= sb1.charAt(i);
-					char b= sb2.charAt(j);
-					if (a==b) {
-						sb1.deleteCharAt(i);
-						sb2.deleteCharAt(j);
-						i--;
-						j--;
-						dem++;
-						break;
-					}
+
+	static int commonCharacterCount(String s1, String s2) {
+		int dem = 0;
+		StringBuilder sb1 = new StringBuilder(s1);
+		StringBuilder sb2 = new StringBuilder(s2);
+		for (int i = 0; i < sb1.length(); i++) {
+			for (int j = 0; j < sb2.length(); j++) {
+				char a = sb1.charAt(i);
+				char b = sb2.charAt(j);
+				if (a == b) {
+					sb1.deleteCharAt(i);
+					sb2.deleteCharAt(j);
+					i--;
+					j--;
+					dem++;
+					break;
 				}
 			}
-		    return dem;
-		
+		}
+		return dem;
+
 	}
-	
-	static boolean checkEqualFrequency(int[] inputArray){
+
+	static boolean checkEqualFrequency(int[] inputArray) {
 		try {
 			Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 			int temp = 0;
-			int count =0;
+			int count = 0;
 			int count1 = 0;
 			for (int i = 0; i < inputArray.length; i++) {
-				temp=0;
+				temp = 0;
 				for (int j = 0; j < inputArray.length; j++) {
-					if (inputArray[i]/inputArray[j]==1 && inputArray[i]%inputArray[j]==0)temp++;
+					if (inputArray[i] / inputArray[j] == 1 && inputArray[i] % inputArray[j] == 0)
+						temp++;
 				}
 				if (map.isEmpty()) {
 					map.put(inputArray[i], temp);
-				}else {
+				} else {
 					map.put(inputArray[i], temp);
 				}
 			}
@@ -48,18 +53,19 @@ public class Count {
 				count++;
 			}
 			for (int i = 0; i < a.length; i++) {
-				if (a[0]!=a[i]) {
+				if (a[0] != a[i]) {
 					count1++;
 				}
 			}
-			if (count1==0) return true;
+			if (count1 == 0)
+				return true;
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 		return false;
 	}
-	
-	static int differentSymbolsNaive(String s){
+
+	static int differentSymbolsNaive(String s) {
 		try {
 			StringBuilder stringBuilder = new StringBuilder(s);
 			Map<Character, Integer> map = new HashMap<>();
@@ -72,7 +78,7 @@ public class Count {
 		}
 		return -1;
 	}
-	
+
 	static boolean isPangram(String sentence) {
 		try {
 			Map<Integer, Character> map = new HashMap<>();
@@ -127,21 +133,21 @@ public class Count {
 
 	}
 
-	static int differentSubstringsTrie(String inputString){
+	static int differentSubstringsTrie(String inputString) {
 		try {
 			int count = 0;
 			Map<String, Integer> map = new HashMap<>();
 			for (int i = 1; i <= inputString.length(); i++) {
 				count = i;
-				for (int j = 0; j <=inputString.length(); j++) {					
+				for (int j = 0; j <= inputString.length(); j++) {
 					if (count <= inputString.length()) {
 						map.put(inputString.substring(j, count), i);
-						count = count+1;
+						count = count + 1;
 					}
 				}
 			}
 			return map.size();
-		
+
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -149,14 +155,109 @@ public class Count {
 		return -1;
 	}
 
+	static int countCouple(int[] a) {
+		int count1 = 0;
+		Map<Integer, Integer> map = new HashMap<>();
+		for (int i = 0; i < a.length; i++) {
+			map.put(a[i], a[i]);
+		}
+		for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+			int count = 0;
+			for (int i = 0; i < a.length; i++) {
+				if (entry.getKey() == a[i]) {
+					count++;
+				}
+			}
+			while (count > 1) {
+				count1++;
+				count = count - 2;
+
+			}
+		}
+		return count1;
+	}
+
+	static int bookDays(int[] a) {
+		try {
+			int count1 = 0;
+			List<Float> list = new ArrayList<>();
+			for (int i = 0; i < a.length; i++) {
+				float temp = 0;
+				int count = 0;
+
+				for (int j = 0; j <= i; j++) {
+					temp += a[j];
+					count++;
+				}
+				temp = temp / count;
+				list.add(temp);
+			}
+
+			for (int i = 1; i <= a.length; i++) {
+				if (list.get(i) > list.get(i - 1)) {
+					count1++;
+				}
+			}
+			return count1;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return -1;
+	}
+
+	static int countOx(int[] a, int k) {
+		try {
+			int count = 0;
+			
+			for (int i = 0; i < a.length; i++) {
+				if (a[i] == 0) {
+					continue;
+				}
+				if ((a[i]-reverseNumber(a[i]))%k==0) {
+					count ++;
+				}
+			}
+			return count;
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return -1;
+	}
+
+	static int reverseNumber(int n) {
+		int reverse = 0;
+		while (n != 0) {
+			reverse = reverse * 10;
+			reverse = reverse + n % 10;
+			n = n / 10;
+		}
+		return reverse;
+	}
+	
+	static	int helpMe(int n, int m) {
+		return -1;
+	}
+
+	static int contest(int[] a, int k) {
+		if (k==a.length) {
+			k=k-1;
+		}
+		int count = 0;
+		for (int i = 0; i < a.length; i++) {
+			int temp = a[k];
+			if (a[i]>=k && a[i]>0) {
+				count++;
+			}
+		}
+		return count;
+	}
+	
 	
 	public static void main(String[] args) {
-		
-		String inputString = "abac";
-		
-		
-		
-		System.out.println(differentSubstringsTrie(inputString));
+
+		int a[] = {16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0};
+
+
 	}
 
 }

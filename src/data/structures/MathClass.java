@@ -85,6 +85,13 @@ public class MathClass {
 		
 		return x;
 	}
+	
+	boolean sasukeCodewar(int n, int m, int k) {
+		if (n<m && n<k) {
+			return true;
+		}
+		return false;
+	}
  
 	
 	
