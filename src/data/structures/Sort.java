@@ -1,7 +1,14 @@
 package data.structures;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Stack;
+
+import sun.awt.image.ImageWatched.Link;
 
 public class Sort {
 	static int[] bubbleSortArray(int[] arr) {
@@ -247,11 +254,105 @@ public class Sort {
 		return sum;
 	}
 	
+	static	int[] sortArray(int[] a) {
+		List<Integer> soDuong = new ArrayList<>();
+		List<Integer> soAm = new ArrayList<>();
+		Stack<Integer> stack = new Stack<>();
+		Queue<Integer> queue = new PriorityQueue<>();
+		for (int i : a) {
+			if (i > 0) {
+				soDuong.add(i);
+			}else if (i <0) {
+				soAm.add(i);
+			} 
+		}
+		Collections.sort(soDuong);
+		Collections.sort(soAm);
+		for (int i = 0; i < soAm.size(); i++) {
+			stack.push(soAm.get(i));
+		}
+		for (int i = 0; i < soDuong.size(); i++) {
+			queue.offer(soDuong.get(i));
+		}
+		
+		for (int i = 0; i < a.length; i++) {
+			if (a[i]>0) {
+				a[i] = 	queue.poll();
+				
+			}else if (a[i] < 0) {
+				a[i] = stack.pop();
+			}
+		}
+		
+		return a;
+	}
 	
+	 static int[] quickSort1(int a[],int left,int right) {
+		int key = a[left];
+		int i = left;
+		int j = right;
+		int temp = 0;
+		while (i<=j) {
+
+			while (key > a[i]) {
+				i++;
+			}
+			while (key < a[j]) {
+				j--;
+			}
+			if (i<=j) {
+				temp = a[i];
+				a[i] = a[j];
+				a[j] = temp;
+				i++;j--;
+			}
+		}
+		if (left<j) {
+			quickSort1(a, left, j);
+		}
+		if (right >i ) {
+			quickSort1(a, i, right);
+		}
+		
+		return a;
+	
+	}
+	
+	 static	int[] interleavingNegPos(int[] np) {
+		 	List<Integer> soDuong = new ArrayList<>();
+		 	List<Integer> soAm = new ArrayList<>();
+		 	Queue<Integer> soDuongQ = new LinkedList<>();
+		 	Stack<Integer> soAmS = new Stack<>();
+		 	for (int i = 0; i < np.length; i++) {
+				if (np[i]>=0) {
+					soDuong.add(np[i]);
+				}else {
+					soAm.add(np[i]);
+				}
+			}
+		 	Collections.sort(soDuong);
+		 	Collections.sort(soAm);
+		 	
+		 	for (Integer integer : soAm) {
+				soAmS.push(integer);
+			}
+		 	for (Integer integer : soDuong) {
+				soDuongQ.offer(integer);
+			}
+		 	np[0]=soAmS.pop();
+		 	for (int i = 1; i < np.length; i++) {
+		 		if (np[i-1] <0) {
+					np[i] = soDuongQ.poll();
+				}else {
+					np[i] = soAmS.pop();
+				}
+			}
+		 	 return np;
+	 } 
+	 
 	public static void main(String[] args) {
-		int a[] = {13, 20, 7, 4};
-		int b[] = {2,1,1};
-		String c[] = {"aaa","bbb","a"};
-		System.out.println(sortByLength(c));
+		int a[] = {5,3,2,7,-2,-4,-5,-6};
+	
+		showArray(interleavingNegPos(a));
 	}
 }

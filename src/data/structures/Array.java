@@ -1,43 +1,46 @@
 package data.structures;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Array {
 	static Scanner sc = new Scanner(System.in);
-	static	int[] removeArray(int a[],int index) {
-		for (int i = index; i < a.length-1; i++) {
-			a[i] = a[i+1];
+
+	static int[] removeArray(int a[], int index) {
+		for (int i = index; i < a.length - 1; i++) {
+			a[i] = a[i + 1];
 		}
 		return a;
 	}
-	
-	static void AddArray(int a[],int n) {
+
+	static void AddArray(int a[], int n) {
 		for (int i = 0; i < n; i++) {
-			System.out.println("Nhập value thứ a ["+i+"] =");
+			System.out.println("Nhập value thứ a [" + i + "] =");
 			a[i] = sc.nextInt();
 		}
 	}
-	
-	static void showArray(int a[],int n) {
+
+	static void showArray(int a[], int n) {
 		for (int i = 0; i < n; i++) {
-			System.out.print(a[i] +"\t");
+			System.out.print(a[i] + "\t");
 		}
 	}
-	
-	static int[] addValueInArray(int a[],int index,int v,int n) {
-		for (int i =n-1 ; i >= index; i--) {
-			a[i+1] = a[i];
+
+	static int[] addValueInArray(int a[], int index, int v, int n) {
+		for (int i = n - 1; i >= index; i--) {
+			a[i + 1] = a[i];
 		}
-		a[index] = v;	
+		a[index] = v;
 		return a;
 	}
-	
-	static int[] sortArray(int a[],int n) {
+
+	static int[] sortArray(int a[], int n) {
 		int temp = 0;
 		for (int i = 0; i < n; i++) {
-			for (int j = i+1; j <n; j++) {
+			for (int j = i + 1; j < n; j++) {
 				if (a[i] > a[j]) {
 					temp = a[i];
 					a[i] = a[j];
@@ -45,11 +48,11 @@ public class Array {
 				}
 			}
 		}
-	
+
 		return a;
 	}
-	
-	static int[] insertArraySorting(int a[],int value,int n) {
+
+	static int[] insertArraySorting(int a[], int value, int n) {
 		int temp = 0;
 		for (int i = 0; i < n; i++) {
 			if (a[i] >= value) {
@@ -57,26 +60,26 @@ public class Array {
 				break;
 			}
 		}
-		for (int i = n-1; i >= temp; i--) {
-			a[i+1] = a[i];
+		for (int i = n - 1; i >= temp; i--) {
+			a[i + 1] = a[i];
 		}
 		a[temp] = value;
 		return a;
 	}
-	
-	static	boolean isMonotonous(int[] sequence){
+
+	static boolean isMonotonous(int[] sequence) {
 		int count1 = 1;
 		int count2 = 1;
 		for (int i = 1; i < sequence.length; i++) {
 			int a = sequence[i];
-			int b = sequence[i-1];
-			if (a>b) {
+			int b = sequence[i - 1];
+			if (a > b) {
 				count1++;
 			}
-			if (a<b) {
+			if (a < b) {
 				count2++;
 			}
-			if (a==b) {
+			if (a == b) {
 				return false;
 			}
 		}
@@ -85,51 +88,51 @@ public class Array {
 		}
 		return false;
 	}
-	
-	static	boolean isArithmeticProgression(int[] sequence){
-		int temp = sequence[1]-sequence[0];
+
+	static boolean isArithmeticProgression(int[] sequence) {
+		int temp = sequence[1] - sequence[0];
 		int sum = 0;
 		for (int i = 1; i < sequence.length; i++) {
-			sum = sequence[i] - sequence[i-1];
+			sum = sequence[i] - sequence[i - 1];
 			if (sum != temp) {
 				return false;
 			}
 		}
 		return true;
 	}
-	
-	static int[] prefixSums(int[] a){
+
+	static int[] prefixSums(int[] a) {
 		int temp = 0;
-		int b [] = new int[a.length];
+		int b[] = new int[a.length];
 		for (int i = 1; i < a.length; i++) {
 			temp = 0;
 			for (int j = 0; j < i; j++) {
 				temp += a[j];
-				b[i] =temp;
+				b[i] = temp;
 			}
 		}
 		b[0] = a[0];
 		return b;
 	}
-	
-	static	int[] alternatingSums(int[] a){
+
+	static int[] alternatingSums(int[] a) {
 		try {
 			int b[] = new int[2];
 			int sum1 = 0;
 			int sum2 = 0;
 			for (int i = 2; i < a.length; i++) {
-				if (i %2== 0) {
-					sum1+=a[i];
-				}else {
-					sum2+=a[i];
+				if (i % 2 == 0) {
+					sum1 += a[i];
+				} else {
+					sum2 += a[i];
 				}
 			}
 			if (a.length == 1) {
 				b[0] = a[0];
 				b[1] = 0;
-			}else {
-				sum1+=a[0];
-				sum2+=a[1];
+			} else {
+				sum1 += a[0];
+				sum2 += a[1];
 				b[0] = sum1;
 				b[1] = sum2;
 			}
@@ -139,13 +142,13 @@ public class Array {
 		}
 		return null;
 	}
-	
-	static	int[] makeArrayConsecutive(int[] sequence){
+
+	static int[] makeArrayConsecutive(int[] sequence) {
 		try {
 			int temp = 0;
 			Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 			for (int i = 0; i < sequence.length; i++) {
-				for (int j = i+1; j < sequence.length; j++) {
+				for (int j = i + 1; j < sequence.length; j++) {
 					if (sequence[i] > sequence[j]) {
 						temp = sequence[i];
 						sequence[i] = sequence[j];
@@ -153,16 +156,16 @@ public class Array {
 					}
 				}
 			}
-			
+
 			int a = sequence[0];
-			int b = sequence[sequence.length-1];
+			int b = sequence[sequence.length - 1];
 			for (int i = a; i <= b; i++) {
 				map.put(i, i);
 			}
-			
-			for (int i = a; i <=b; i++) {
+
+			for (int i = a; i <= b; i++) {
 				for (int j = 0; j < sequence.length; j++) {
-					if (map.get(i)==sequence[j]) {
+					if (map.get(i) == sequence[j]) {
 						map.remove(i);
 						break;
 					}
@@ -174,9 +177,9 @@ public class Array {
 				array[count] = entry.getKey();
 				count++;
 			}
-			
+
 			for (int i = 0; i <= array.length; i++) {
-				for (int j = i+1; j < array.length; j++) {
+				for (int j = i + 1; j < array.length; j++) {
 					if (array[i] > array[j]) {
 						temp = array[i];
 						array[i] = array[j];
@@ -184,7 +187,6 @@ public class Array {
 					}
 				}
 			}
-		
 
 			return array;
 		} catch (Exception e) {
@@ -194,18 +196,69 @@ public class Array {
 		return null;
 	}
 
-	
-	static	int circleRotation(int[] arr, long d) {
-		
+	static boolean checkSort(int[] a) {
+		List<Integer> list = new ArrayList<>();
+		int count = 0;
+		list.add(a[0]);
+		for (int i = 1; i < a.length; i++) {
+			if (a[i] != a[i - 1]) {
+				list.add(a[i]);
+			}
+		}
+		for (int i = 0; i < list.size(); i++) {
+			for (int j = i + 1; j < list.size(); j++) {
+				if (list.get(i) == list.get(j)) {
+					count++;
+				}
+			}
+		}
+		if (count > 0) {
+			return false;
+		}
+		return true;
+	}
+
+	static int[] MaxSumArray(int[] a, int k) {
+		List<Integer> list = new ArrayList<>();
+		int tong = 0;
+		int max = 0;
+		int sum[] = new int[a.length];
+
+		int index = 0;
+		for (int i = 0; i <= a.length - k; i++) {
+			tong = 0;
+			for (int j = i; j < i + k; j++) {
+				tong = tong + a[j];
+			}
+			sum[i] = tong;
+		}
+
+		for (int i = 0; i < sum.length; i++) {
+			if (sum[i] > max) {
+				max = sum[i];
+				index = i;
+			}
+
+		}
+		for (int i = index; i < index + k; i++) {
+			list.add(a[i]);
+		}
+		int temp[] = new int[list.size()];
+		for (int i = 0; i < temp.length; i++) {
+			temp[i] = list.get(i);
+		}
+		return temp;
+	}
+
+	static int circleRotation(int[] arr, long d) {
+
 		return arr[(int) d];
 	}
-	
-	
-	
+
 	public static void main(String[] args) {
-		int a [] = {-1,-3};
-		System.out.println(makeArrayConsecutive(a));;
-		
+		int a[] = { 4, 8, 7, 4, 7, 4 };
+		showArray(MaxSumArray(a, 3), a.length);
+
 	}
-	
+
 }

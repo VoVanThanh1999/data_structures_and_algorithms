@@ -47,10 +47,9 @@ public class Strings {
 		}
 		list.add(st1.length());
 		for (int i = 1; i < list.size(); i++) {
-			st2.append(st1.toString().substring(list.get(i-1), list.get(i))+" ");
+			st2.append(st1.toString().substring(list.get(i - 1), list.get(i)) + " ");
 		}
-	
-		
+
 		return st2.toString().trim();
 	}
 
@@ -115,7 +114,7 @@ public class Strings {
 			temp = "";
 			for (int j = i + 1; j < inputArray.length; j++) {
 				temp = inputArray[i] + inputArray[j];
-				if (checkCrossover(temp, result)== true) {
+				if (checkCrossover(temp, result) == true) {
 					count++;
 				}
 			}
@@ -177,10 +176,60 @@ public class Strings {
 		return null;
 	}
 
-	public static void main(String[] args) {
-		String[] inputArray = { "abc", "aaa", "aba", "bab" };
-		String result = "bbb";
-		System.out.println(amendTheSentence("iFvFAxtViLJDuWWXJesppOcLVdRA"));
+	static String boxChat(String s, String[] a) {
+		StringBuilder stringBuilder = new StringBuilder(s);
+		try {
+			String star = "";
+			String temp1 = " ";
+			for (int i = 0; i < a.length; i++) {
+				for (int j = 0; j <= s.length() - a[i].length(); j++) {
+					star = "";
 
+					if (j == 0) {
+						if (a[i].equals(stringBuilder.substring(j, j + a[i].length()))
+								&& stringBuilder.substring(j + a[i].length(), j + 1 + a[i].length()).equals(" ")) {
+							for (int k = 0; k < a[i].length(); k++) {
+								star += "*";
+							}
+							stringBuilder.delete(j, j + a[i].length());
+							stringBuilder.insert(j, star);
+						}
+					}
+
+					if (j > 0) {
+						temp1 = stringBuilder.substring(j - 1, j);
+					}
+					if (j <= s.length() - a[i].length() - 1) {
+						if (a[i].equals(stringBuilder.substring(j, j + a[i].length()))
+								&& stringBuilder.substring(j + a[i].length(), j + 1 + a[i].length()).equals(" ")
+								&& temp1.equals(" ")) {
+							for (int k = 0; k < a[i].length(); k++) {
+								star += "*";
+							}
+							stringBuilder.delete(j, j + a[i].length());
+							stringBuilder.insert(j, star);
+						}
+					}
+					if (j >= s.length() - a[i].length() - 1) {
+						if (a[i].equals(stringBuilder.substring(j, j + a[i].length())) && temp1.equals(" ")) {
+							for (int k = 0; k < a[i].length(); k++) {
+								star += "*";
+							}
+							stringBuilder.delete(j, j + a[i].length());
+							stringBuilder.insert(j, star);
+						}
+					}
+				}
+			}
+			return stringBuilder.toString();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return stringBuilder.toString();
+	}
+
+	public static void main(String[] args) {
+		String[] ds = { "tav", "z", "l", "ws" };
+		System.out.println(boxChat("l tav h ib l egfi wd ws w tav l tz", ds));
 	}
 }
