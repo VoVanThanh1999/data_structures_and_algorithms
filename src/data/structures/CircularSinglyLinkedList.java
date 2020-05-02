@@ -1,11 +1,12 @@
 package data.structures;
 
 import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 public class CircularSinglyLinkedList {
 	
-	private ListNode last;
-	private int length;
+	static	private ListNode last;
+	static private int length;
 	
 	public static class ListNode{
 		public ListNode next;
@@ -17,30 +18,26 @@ public class CircularSinglyLinkedList {
 		}
 	}
 
-	public CircularSinglyLinkedList() {
-		super();
-		this.last = null;
-		this.length = 0;
-	}
 	
-	public int length() {
+	
+	 int length() {
 		return length = 0;
 	}
 	
-	public boolean isEmpty() {
+	 boolean isEmpty() {
 		return length==0;
 	}
 	
-	public void display() {
+	 static public void display() {
 		ListNode firts = last.next;
 		while (firts!=last) {
-			System.out.print(firts.data +" -> ");
+			System.out.print(firts.data +" ");
 			firts = firts.next;
 		}
 		System.out.print(firts.data);
 	}
 	
-	public void insertBegining(int data) {
+	 static public void insertBegining(int data) {
 		ListNode node = new ListNode(data);
 		if (last == null) {
 			last = node;
@@ -51,7 +48,7 @@ public class CircularSinglyLinkedList {
 		length++;
 	}
 	
-	public void insertAtTheEnd(int data) {
+	 static public void insertAtTheEnd(int data) {
 		ListNode listNode = new ListNode(data);
 		if (last == null) {
 			last = listNode;
@@ -64,13 +61,13 @@ public class CircularSinglyLinkedList {
 		length++;
 	}
 	
-	public void deleteFirst() {
+	 static public void deleteFirst() {
 		ListNode first = last.next;
 		last.next = first.next;
 		first= first.next;
 	}
 	
-	public void deleteLast() {
+	 static public void deleteLast() {
 		ListNode temp = last;
 		while (temp.next != last) {
 			temp = temp.next;
@@ -80,7 +77,7 @@ public class CircularSinglyLinkedList {
 		last=temp;
 	}
 	
-	public void deletePosition(int index) {
+	 static public void deletePosition(int index) {
 		ListNode lastNode = last;
 		ListNode firtNode = last.next;
 		ListNode temp = firtNode;
@@ -102,14 +99,31 @@ public class CircularSinglyLinkedList {
 		
 	}
 	
+	public static void print(int index) {
+		ListNode pHead = null;
+		ListNode p = last;
+		for (int i = 0; i < index; i++) {
+			p = p.next;
+		}
+		ListNode b = p.next;
+		while (p!=b) {
+			System.out.print(b.data+" ");
+			b=b.next;
+		}
+		System.out.print(b.data +" ");
+	}
+	
 	public static void main(String[] args) {
-		CircularSinglyLinkedList cir = new CircularSinglyLinkedList();
-		cir.insertBegining(5);
-		cir.insertBegining(4);
-		cir.insertBegining(3);
-		cir.insertBegining(2);
-		cir.insertBegining(1);
-		cir.display();
+		Scanner sc = new Scanner(System.in);
+		int n = sc.nextInt();
+		for (int i = 0; i < n; i++) {
+			int x = sc.nextInt();
+			insertAtTheEnd(x);
+		}
+		int k = sc.nextInt();
+		print(k);
+		
+		
 	}
 	
 }

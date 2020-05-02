@@ -1,6 +1,8 @@
 package data.structures;
 
+import java.util.LinkedList;
 import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 public class Queue {
 	
@@ -56,12 +58,72 @@ public class Queue {
 		}
 		System.out.print(node.data +" -> ");
 	}
+	
+	static	boolean isPrime(int n) {
+		if (n<2)
+			return false;
+		for (int i = 2; i < Math.sqrt(n); i++) {
+			if (n%i==0) 
+				return false;
+		}
+		return true;
+	}
+	
+	static void superPrimeNumber() {
+		Scanner sc = new Scanner(System.in);
+		java.util.Queue<Integer> queue = new LinkedList<Integer>();
+		int n = sc.nextInt();
+		for (int i =2;  i < 10 && i<=n ; i++) {
+			if (isPrime(i)) 
+				queue.offer(i);
+		}
+		while (!queue.isEmpty()) {
+			for (int i = 1; i <= 9; i++) {
+				int k = queue.element()*10+i;
+				if (isPrime(k)&& k < n) {
+					queue.offer(k);
+				}
+			}
+			System.out.print(queue.element()+" -> ");
+			queue.poll();
+		}
+	}
+	
+	public static void saveNumberPhone() {
+		Scanner sc = new Scanner(System.in);
+		java.util.Queue<Integer> q = new LinkedList<>();
+		boolean b[] = new boolean[100];
+		int a[] = new int[100];
+		int n = sc.nextInt();
+		for (int i = 0; i < 100; i++) {
+			b[i] = false;
+		}
+		for (int i = 0; i < n; i++) {
+			a[i] = sc.nextInt();
+		}
+		int k = sc.nextInt();
+		
+		for (int i = 0; i < n; i++) {
+			if (!b[a[i]]) {
+				if (q.size()<k) {
+					b[a[i]] = true;
+					q.offer(a[i]);
+				}else {
+					b[q.element()] = false;
+					b[a[i]] = true;
+					q.offer(a[i]);
+					q.poll();
+				}
+			}
+		}
+		
+		while (!q.isEmpty()) {
+			System.out.print(q.poll());
+			
+		}
+	}
+	
 	public static void main(String[] args) {
-		Queue queue = new Queue();
-		queue.enqueue(1);  
-		queue.enqueue(2);
-		queue.enqueue(3);
-		queue.enqueue(4);
-		System.out.println(queue.dequeue());
+		saveNumberPhone();
 	}
 }
