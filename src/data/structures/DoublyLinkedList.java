@@ -102,7 +102,7 @@ public class DoublyLinkedList {
 			}
 			temp = node.next;
 			node.next = temp.next;
-			node.next.previous = temp.previous;
+			temp.next.previous = node;
 			temp.next = null;
 			temp.previous = null;
 		} catch (Exception e) {
@@ -149,10 +149,10 @@ public class DoublyLinkedList {
 	public static void main(String[] args) {
 		DoublyLinkedList linkedList = new DoublyLinkedList();
 		linkedList.insertTheEnd(1);
-		linkedList.insertTheEnd(1);
 		linkedList.insertTheEnd(2);
 		linkedList.insertTheEnd(3);
-		linkedList.insertPosition(2, 15);
+	
+		linkedList.deletePosition(2);
 		linkedList.show(pHead);
 	}
 }

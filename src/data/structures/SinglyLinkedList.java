@@ -1,9 +1,11 @@
 package data.structures;
 
+import Java.SigLinkListNode.ListNode;
 
 public class SinglyLinkedList {
 
 	private static ListNode head;
+	private static ListNode head1;
 
 	private class ListNode {
 		private int data;
@@ -60,6 +62,19 @@ public class SinglyLinkedList {
 			head = listNode;
 		} else {
 			ListNode node = head;
+			while (node.next != null) {
+				node = node.next;
+			}
+			node.next = listNode;
+		}
+	}
+
+	public void insertFirts1(int data) {
+		ListNode listNode = new ListNode(data);
+		if (head1 == null) {
+			head1 = listNode;
+		} else {
+			ListNode node = head1;
 			while (node.next != null) {
 				node = node.next;
 			}
@@ -182,19 +197,55 @@ public class SinglyLinkedList {
 		node.next = newNode;
 
 	}
-	
+
 	public void removeGivenKey(int key) {
 		ListNode curent = head;
-		ListNode temp = null;	
-		while (curent.next!= null && curent.data != key) {
+		ListNode temp = null;
+		while (curent.next != null && curent.data != key) {
 			temp = curent;
-			curent=curent.next;
+			curent = curent.next;
 		}
-		if(curent ==null) return;
+		if (curent == null)
+			return;
 		temp.next = curent.next;
-		
+
 	}
-	
+
+	public void getNode(int index) {
+		ListNode node = head;
+		for (int i = 0; i < index; i++) {
+			node = node.next;
+		}
+		System.out.println(node.data);
+	}
+
+	public void convert(int value, int key) {
+
+		ListNode listNode = head;
+		while (listNode.next != null) {
+			if (listNode.data == value)
+				listNode.data = key;
+			listNode = listNode.next;
+		}
+		if (listNode.data == key)
+			listNode.data = key;
+
+	}
+
+	public void deleteBigger(int k) {
+		ListNode node = head;
+		ListNode temp = head;
+		for (int i = 0; i <= k; i++) {
+			node = node.next;
+		}
+		int v = node.data;
+		while (temp != null) {
+			if (temp.data < v) {
+				insertFirts1(temp.data);
+			}
+			temp = temp.next;
+		}
+	}
 
 	public static void main(String[] args) {
 		SinglyLinkedList singlyLinkedList = new SinglyLinkedList();
