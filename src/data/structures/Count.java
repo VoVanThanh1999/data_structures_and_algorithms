@@ -3,9 +3,11 @@ package data.structures;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Count {
 	static int aMuN(int n) {
@@ -722,9 +724,92 @@ public class Count {
 
 	}
 
-	public static void main(String[] args) {
+	static boolean numberPalindrome(long n) {
+		String s1 = new String(String.valueOf(n));
+		int i = 0;
+		int j = s1.length() - 1;
+		while (i != j && i < j) {
+			if (s1.charAt(i) != s1.charAt(j)) {
+				return false;
+			}
+			i++;
+			j--;
+		}
+		return true;
+	}
 
-		System.out.println(prominentCharacters("abbac"));
+	static int countZeroDigit(int a, int b) {
+		int count = 0;
+		for (int i = a; i <= b; i++) {
+			String temp = String.valueOf(i);
+			for (int j = 0; j < temp.length(); j++) {
+				if (Character.getNumericValue(temp.charAt(j)) == 0) {
+					count++;
+				}
+			}
+		}
+		return count;
+	}
+
+	static int specialPolynomial(int x, int n) {
+		int result = 0;
+		int count = -1;
+		while (result < n) {
+			count++;
+			result += Math.pow(x, count);
+
+		}
+		return count - 1;
+	}
+
+	static int secondBiggest(int n, int[] a) {
+		Set<Integer> set = new HashSet<>();
+		for (int i = 0; i < a.length; i++) {
+			set.add(a[i]);
+		}
+		List<Integer> list = new ArrayList<>(set);
+		if (list.size() < 2) {
+			return list.get(0);
+		}
+		Collections.sort(list);
+		return list.get(list.size() - 2);
+	}
+
+	static int ten(int n) {
+		int count = 0;
+		if (n % 5 != 0) {
+			return -1;
+		}
+		while (n % 10 != 0) {
+			count++;
+			n += n;
+		}
+		return count;
+	}
+
+	static int ropes(int[] a, int k) {
+
+	}
+
+	static int chessKnight(String Cell) {
+
+	}
+
+	public static int dontGiveMeFive(int start, int end) {
+		int count = 0;
+		while (start <= end) {
+			String string = new String(String.valueOf(start));
+			if (string.contains("5") == false) {
+				count++;
+			}
+			start++;
+		}
+		return count;
+	}
+
+	public static void main(String[] args) {
+		System.out.println(ten(15));
+		System.out.println(dontGiveMeFive(1,8));
 	}
 
 }

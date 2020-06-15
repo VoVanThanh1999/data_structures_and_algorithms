@@ -1,18 +1,17 @@
 package data.structures;
-
+import java.util.HashSet;
 import java.util.ArrayList;
+import java.util.Set;
+import java.util.List;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import java.util.Set;
-
-import com.sun.org.apache.bcel.internal.generic.LUSHR;
-
+import java.util.Stack;
+import java.util.stream.Stream;
+import javax.crypto.spec.IvParameterSpec;
 public class Array {
 	static Scanner sc = new Scanner(System.in);
 
@@ -504,10 +503,10 @@ public class Array {
 		int j = r;
 		int temp = 0;
 		while (i <= j) {
-			while (pivot > a[i]) {
+			while (pivot < a[i]) {
 				i++;
 			}
-			while (pivot < a[j]) {
+			while (pivot > a[j]) {
 				j--;
 			}
 			if (i <= j) {
@@ -893,7 +892,7 @@ public class Array {
 			}
 		}
 
-		if (a[0] > 1 || a[0] < 0 && flag == false) {
+		if (a[0] > 0 || a[0] < 0 && flag == false) {
 			return 0;
 		}
 
@@ -939,7 +938,7 @@ public class Array {
 			}
 
 		}
-		return flag1 == true || flag2 == true || flag3==true;
+		return flag1 == true || flag2 == true || flag3 == true;
 	}
 
 	static int[] countTeam(int n) {
@@ -954,48 +953,1007 @@ public class Array {
 		temp[1] = Collections.max(list);
 		return temp;
 	}
-	
-	static	int stopLight(int[] arr) {
-		
+
+	static int stopLight(int[] arr) {
+
 	}
-	
-	static	int firstBigger(int a, int b) {
+
+	static int firstBigger(int a, int b) {
 	}
-	
+
 	static boolean isInfiniteProcess(long a, long b) {
-		// a bé hơn b	
-		
-		if ((a==0 && b%2==0) || (a%2==0 && b==0) ) {
+		// a bé hơn b
+
+		if ((a == 0 && b % 2 == 0) || (a % 2 == 0 && b == 0)) {
 			return false;
 		}
-		
-		if (a > b && a%2==0 && b%2==0) {
+
+		if (a > b && a % 2 == 0 && b % 2 == 0) {
 			return false;
 		}
-		
-		if (a > b && a%2!=0 && b%2!=0) {
+
+		if (a > b && a % 2 != 0 && b % 2 != 0) {
 			return false;
 		}
 		return true;
 	}
-	
-	static	int stackofbricks(int[] a) {
-		List<Integer> integers = new ArrayList<>();
+
+	static int stackofbricks(int[] a) {
+		List<Integer> gachs = new ArrayList<>();
+		List<Integer> check = new ArrayList<>();
+		int count = 1;
+		boolean flag = true;
 		for (int i = 0; i < a.length; i++) {
-			integers.add(a[i]);
+			gachs.add(a[i]);
 		}
-		int s = 0;;
-		integers.sort((o1,o2) -> o2-o1);
-		  for(int i=1;i< integers.size();i++)
-		    {
-		        if(a[i]>=s) s++;
-		    }
-		    return s;
+		gachs.sort((o1, o2) -> (o2 - o1));
+		check.add(gachs.get(0));
+		while (flag == true && count < gachs.size()) {
+			boolean flag1 = true;
+			for (int i = 0; i < check.size(); i++) {
+				if (check.get(i) < 1) {
+					flag1 = false;
+				}
+			}
+			if (flag1) {
+				check.add(gachs.get(count));
+				count++;
+				for (int i = 0; i < check.size() - 1; i++) {
+					check.set(i, check.get(i) - 1);
+				}
+			} else {
+				flag = false;
+			}
+
+		}
+		return count;
+
+	}
+
+	static String jumpingFrog(int[] a) {
+		long x1 = a[0];
+		long x2 = a[1];
+		long v1;
+		long v2;
+		long jum1;
+		long jum2;
+		if (a[0] < a[1]) {
+			jum1 = x1;
+			jum2 = x2;
+			v1 = a[2];
+			v2 = a[3];
+		} else {
+			jum1 = x2;
+			jum2 = x1;
+			v1 = a[3];
+			v2 = a[2];
+		}
+		if (jum1 < jum2 && v1 <= v2) {
+			return "No";
+		}
+		while (jum1 < jum2) {
+			jum1 += v1;
+			jum2 += v2;
+		}
+		if (jum1 == jum2) {
+			return String.valueOf(jum1);
+		}
+		return "NO";
+	}
+
+	static boolean isSortedArray(int[] arr) {
+		boolean flag1 = true;
+		boolean flag2 = true;
+		for (int i = 1; i < arr.length; i++) {
+			if (arr[i] > arr[i - 1]) {
+				flag1 = false;
+			}
+			if (arr[i] < arr[i - 1]) {
+				flag2 = false;
+			}
+		}
+		return flag1 == true || flag2 == true;
+	}
+
+	static boolean tankParade(int[] arr) {
+
+	}
+
+	static int doingHomework(int[] a) {
+		int sum = 0;
+		List<Integer> list = new ArrayList<>();
+		for (int i = 0; i < a.length; i++) {
+			sum += a[i];
+			for (int j = i; j < a.length; j++) {
+				if (a[i] < a[j] && i != j) {
+					sum += a[j];
+					i++;
+				} else if (a[i] >= a[j] && i != j) {
+					list.add(sum);
+					i = j - 1;
+					break;
+				}
+			}
+			list.add(sum);
+			sum = 0;
+		}
+		return Collections.max(list);
+	}
+
+	static int sumFillerDiagonal(int[][] a) {
+		int n = a.length - 1;
+		int sum = 0;
+		for (int i = 0; i < a.length; i++) {
+			sum += a[i][n];
+			n--;
+		}
+		return sum;
+	}
+
+	static int gradeCheating(int n, int m, int[] a) {
+		int sum = 0;
+		for (int i = 0; i < n; i++) {
+			sum += a[i];
+		}
+		if (sum < m) {
+			return sum;
+		}
+		return m;
+	}
+
+	static int gcdOfNumbers(int[] a) {
+		int arr[] = quickSort(a, 0, a.length - 1);
+		int gcd = 1;
+		List<Integer> list = new ArrayList<>();
+		while (gcd < a[a.length - 1]) {
+			boolean flag = true;
+			for (int i = 0; i < arr.length; i++) {
+				if (arr[i] % gcd != 0) {
+					flag = false;
+					break;
+				}
+			}
+			if (flag) {
+				list.add(gcd);
+			}
+			gcd++;
+		}
+
+		return Collections.max(list);
+	}
+
+	static int uniqueNumber(int[] arr) {
+		for (int i = 0; i < arr.length; i++) {
+			boolean flag = true;
+			for (int j = 0; j < arr.length; j++) {
+				if (arr[i] == arr[j] && i != j) {
+					flag = false;
+					break;
+				}
+			}
+			if (flag) {
+				return arr[i];
+			}
+		}
+		return -1;
+	}
+
+	static int[] findDistinctNumbers(int[] a) {
+		Map<Integer, Boolean> map = new HashMap<>();
+		List<Integer> list = new ArrayList<>();
+		for (int i = 0; i < a.length; i++) {
+			map.put(a[i], true);
+		}
+
+		for (int i = 0; i < a.length; i++) {
+			if (map.get(a[i]) == true) {
+				list.add(a[i]);
+				map.put(a[i], false);
+			}
+		}
+		int b[] = new int[list.size()];
+		for (int i = 0; i < b.length; i++) {
+			b[i] = list.get(i);
+		}
+		return b;
+	}
+
+	static int missingNumber(int[] arr) {
+		int a[] = quickSort(arr, 0, arr.length - 1);
+		if (a[0] != 1) {
+			return 1;
+		}
+		for (int i = 1; i < a.length; i++) {
+			if (a[i] > a[i - 1] + 1) {
+				return a[i - 1] + 1;
+			}
+		}
+		return a[a.length - 1] + 1;
+	}
+
+	static int numberGameIII(int[] s) {
+		int arr[] = quickSort(s, 0, s.length - 1);
+		boolean flag = true;
+		for (int i = 1; i < arr.length; i++) {
+			if (arr[i] % arr[0] != 0) {
+				flag = false;
+			}
+		}
+		if (flag) {
+			return arr[0];
+		}
+		return -1;
+	}
+
+	static boolean beautifulArray(int[] arr) {
+		int mid = 0;
+		int sum1 = 0;
+		int sum2 = 0;
+		if (arr.length == 0 || arr.length == 1) {
+			return false;
+		}
+		if (arr.length == 2) {
+			mid = 1;
+		} else {
+			mid = arr.length / 2;
+
+		}
+		for (int i = 0; i < arr.length; i++) {
+			if (i < mid) {
+				sum1 += arr[i];
+			} else if (i > mid) {
+				sum2 += arr[i];
+			}
+		}
+		return sum1 == sum2;
+
+	}
+
+	static boolean findRange(int[] array, int n) {
+		int count = 1;
+
+		while (count < array.length) {
+			for (int i = 0; i < array.length; i++) {
+				if (array[i] == n) {
+					return true;
+				}
+
+			}
+
+		}
+		return false;
+	}
+
+	static int firstMultiple(int[] divisors, int start) {
+		while (true) {
+			boolean flag = true;
+			for (int i = 0; i < divisors.length; i++) {
+				if (start % divisors[i] != 0) {
+					flag = false;
+					break;
+				}
+			}
+			if (flag == false) {
+				start++;
+				continue;
+			} else {
+				return start;
+			}
+		}
+	}
+
+	static int[] primeFactors(int n) {
+		List<Integer> list = new ArrayList<>();
+		int value = n;
+		if (n < 2) {
+			int s[] = {};
+			return s;
+		}
+		for (int i = 2; i <= n; i++) {
+			if (MathClasss.isPrime(i) && value % i == 0) {
+				value /= i;
+				list.add(i);
+				i = i - 1;
+			}
+			if (value == 1) {
+				int t[] = new int[list.size()];
+				for (int j = 0; j < list.size(); j++) {
+					t[j] = list.get(j);
+				}
+				return t;
+			}
+		}
+		return null;
+	}
+
+	static int mode(int[] arr) {
+		Map<Integer, Integer> map = new HashMap<>();
+		int max = 0;
+		int value = 0;
+		for (int i = 0; i < arr.length; i++) {
+			int count = 1;
+			for (int j = i + 1; j < arr.length; j++) {
+				if (arr[i] == arr[j]) {
+					count++;
+				}
+			}
+			if (map.containsKey(arr[i]) == false) {
+				map.put(arr[i], count);
+			}
+		}
+		for (Map.Entry<Integer, Integer> i : map.entrySet()) {
+			if (i.getValue() >= max) {
+				max = i.getValue();
+			}
+		}
+		for (Map.Entry<Integer, Integer> i : map.entrySet()) {
+			if (i.getValue() == max) {
+				int val = i.getKey() * max;
+				value += val;
+			}
+		}
+		return value;
+
+	}
+
+	static int quizSolve(int[] arr, int x) {
+		int count = 0;
+		for (int i = 0; i < arr.length; i++) {
+			if (x > arr[i]) {
+				count++;
+				x++;
+			} else {
+				break;
+			}
+		}
+		return count;
+	}
+
+	static long repeatingScreen(int[] arr, int k, int n) {
+
+	}
+
+	static int[] findTeam(int[] arr, int k) {
+		Map<Integer, Integer> map = new HashMap<>();
+		List<Integer> list = new ArrayList<>();
+		for (int i = 0; i < arr.length; i++) {
+			int count = 0;
+			for (int j = i + 1; j < arr.length; j++) {
+				if (arr[i] == arr[j]) {
+					count++;
+				}
+			}
+			if (map.get(arr[i]) == null) {
+				map.put(arr[i], count);
+			}
+		}
+		for (Map.Entry<Integer, Integer> i : map.entrySet()) {
+			if (i.getValue() == k) {
+				list.add(i.getKey());
+			}
+		}
+		Collections.sort(list);
+		int temp[] = new int[list.size()];
+		for (int i = 0; i < temp.length; i++) {
+			temp[i] = list.get(i);
+		}
+		return temp;
+	}
+
+	static int sofaShipping(int[] a) {
+		List<Integer> list = new ArrayList<>();
+		int count = 0;
+		for (int i = 0; i < a.length; i++) {
+			list.add(a[i]);
+		}
+		int len = list.size();
+		while (len > 0) {
+			int min = list.get(0);
+			for (int i = 1; i < list.size(); i++) {
+				if (list.get(i) <= min) {
+					min = list.get(i);
+				}
+			}
+			for (int i = 0; i < list.size(); i++) {
+				count++;
+				if (list.get(i) == min) {
+					list.remove(i);
+					len--;
+					break;
+				}
+
+			}
+		}
+		return count;
+	}
+
+	int minimalistFractions(int[] a) {
+		int count = 0;
+		for (int i = 0; i < a.length; i++) {
+			for (int j = 0; j < a.length; j++) {
+				if (a[j] == 1) {
+					continue;
+				} else if (i != j && a[i] != 0 && a[j] != 0) {
+					boolean flag = true;
+					int tuSo = a[i];
+					int mauSo = a[j];
+					if (mauSo == 1) {
+						count++;
+						continue;
+					}
+					int min = tuSo;
+					if (min < mauSo) {
+						min = mauSo;
+					}
+					while (min > 1) {
+						if (tuSo % min == 0 && mauSo % min == 0) {
+							flag = false;
+							break;
+						}
+					}
+					if (flag) {
+						count++;
+					}
+				}
+			}
+		}
+		return count;
+	}
+
+	static String arrayProperty(int[] a) {
+		int val = a[1] - a[0];
+		boolean linear = true;
+		boolean exponential = true;
+
+		for (int i = 1; i < a.length; i++) {
+			if (a[i - 1] + val != a[i]) {
+				linear = false;
+			}
+		}
+		for (int i = 1; i < a.length; i++) {
+			if (a[i - 1] * val != a[i]) {
+				exponential = false;
+			}
+		}
+		if (linear) {
+			return "Linear - Arithmetic Difference = ".concat(String.valueOf(val));
+		}
+		if (exponential) {
+			return "Exponential - Geometric Difference = ".concat(String.valueOf(val));
+		}
+		return "Undetermined";
+	}
+
+	static int longestArrays(int[] a) {
+		int count = 1;
+		int max = 0;
+		for (int i = 1; i < a.length; i++) {
+			if (a[i] >= a[i - 1]) {
+				count++;
+			} else {
+				if (count > max) {
+					max = count;
+					count = 1;
+				}
+				count = 1;
+			}
+		}
+		if (count > max) {
+			max = count;
+			count = 1;
+		}
+		return max;
+	}
+
+	static int[] towers(int[] arr) {
+		int max = 0;
+		Set<Integer> integers = new HashSet<>();
+		for (int i = 0; i < arr.length; i++) {
+			integers.add(arr[i]);
+		}
+		for (int i = 0; i < arr.length; i++) {
+			int count = 1;
+			for (int j = i + 1; j < arr.length; j++) {
+				if (arr[i] == arr[j]) {
+					count++;
+				}
+			}
+			if (count > max) {
+				max = count;
+			}
+		}
+		int a[] = { max, integers.size() };
+		return a;
+	}
+
+	static boolean areSimilar(int[] a, int[] b) {
+		int d = 0;
+		for (int i = 0; i < a.length; i++) {
+			if (a[i] != b[i])
+				d++;
+		}
+		if (d != 0 && d != 2) {
+			return false;
+		}
+		int arr[] = quickSort(a, 0, a.length - 1);
+		int arrB[] = quickSort(a, 0, b.length - 1);
+		for (int i = 0; i < arrB.length; i++) {
+			if (arr[i] != arrB[i]) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	static boolean timeSleep(int[] x) {
+		int value = 0;
+		for (int i = 1; i < x.length; i++) {
+			if (i % 2 != 0) {
+				value = x[i] - x[i - 1];
+			}
+		}
+		return value < 6;
+	}
+
+	static int mettingRoom(int[] s, int[] e) {
+		int count = 1;
+		for (int i = 0; i < e.length; i++) {
+			for (int j = i + 1; j < e.length; j++) {
+				if (e[j] < e[i]) {
+					int temp = e[i];
+					e[i] = e[j];
+					e[j] = temp;
+					int temp1 = s[i];
+					s[i] = s[j];
+					s[j] = temp1;
+				}
+			}
+		}
+		int end = e[0];
+		for (int i = 1; i < e.length; i++) {
+			if (s[i] > end) {
+				count++;
+				end = e[i];
+			}
+		}
+		return count;
+	}
+
+	static int numberOfSubArray(int[] arr) {
+
+		Map<Integer, Integer> map = new HashMap<>();
+		List<Integer> list = new ArrayList<>();
+		String temp = "";
+		int max = 5;
+		int min = 5;
+		for (int i = 0; i < arr.length; i++) {
+			max += Math.abs(arr[i]);
+			if (arr[i] < min) {
+				min = arr[i];
+			}
+		}
+		while (min <= max) {
+			int value = min;
+			for (int i = 0; i < arr.length; i++) {
+				int count3 = 1;
+				int sum = arr[i];
+				if (sum == value) {
+					temp += String.valueOf(arr[i]) + " ";
+				}
+				for (int j = i + 1; j < arr.length; j++) {
+					sum += arr[j];
+					count3++;
+					if (sum == value) {
+						temp += String.valueOf(arr[i]).concat(String.valueOf(arr[j])) + " ";
+					}
+					if (sum > value) {
+						break;
+					}
+					if (count3 == 2) {
+						break;
+					}
+				}
+			}
+			min++;
+		}
+		System.out.println(temp);
+
+		for (int i = 0; i < temp.length(); i++) {
+			int value = 0;
+			boolean flag = false;
+			int sum = 0;
+			for (int j = i; j < temp.length(); j++) {
+				if (String.valueOf(temp.charAt(j)).equals(" ") && flag == false) {
+					sum = 0;
+					break;
+				} else if (String.valueOf(temp.charAt(j)).equals(" ") && flag == true) {
+					break;
+				} else {
+					flag = true;
+					value = j;
+					sum += Character.getNumericValue(temp.charAt(j));
+				}
+			}
+			if (flag) {
+				list.add(sum);
+				i = value;
+			}
+		}
+
+		for (int i = 0; i < list.size(); i++) {
+			int count = 1;
+			for (int j = i + 1; j < list.size(); j++) {
+				if (list.get(i) == list.get(j)) {
+					count++;
+				}
+			}
+			if (map.containsKey(list.get(i)) == false) {
+				map.put(list.get(i), count);
+			}
+		}
+
+		int max1 = 0;
+		for (Map.Entry<Integer, Integer> i : map.entrySet()) {
+			if (i.getValue() > max1) {
+				max1 = i.getValue();
+			}
+		}
+		return max1;
+	}
+
+	static int sortDesc(final int num) {
+		// Your code
+		List<String> list = new ArrayList<>();
+		String s = new String(String.valueOf(num));
+		String temp = "";
+		for (int i = 0; i < s.length(); i++) {
+			list.add(String.valueOf(s.charAt(i)));
+		}
+		Collections.sort(list, Collections.reverseOrder());
+		for (int i = 0; i < list.size(); i++) {
+			temp += String.valueOf(list.get(i));
+		}
+		return Integer.valueOf(temp);
+	}
+
+	static int countMoney(int money) {
+		List<String> list = new ArrayList<>();
+		int a[] = { 20, 10, 5, 2, 1 };
+		int i = 0;
+		int count = 0;
+		int value = money - 21;
+		while (value != 0 && i < a.length) {
+			value = value - a[i];
+			list.add(String.valueOf(a[i]));
+			count++;
+			if (value < 0) {
+				value += a[i];
+				count--;
+				i++;
+				list.remove(list.size() - 1);
+			}
+		}
+		for (int j = 0; j < list.size(); j++) {
+			System.out.print(list.get(j) + " ");
+		}
+		System.out.println("");
+
+		return count;
+	}
+
+	static boolean diagonalMatrix(int[][] a) {
+		boolean flag = true;
+		int count = 0;
+		for (int i = 0; i < a.length; i++) {
+			for (int j = 0; j < a.length; j++) {
+				if (count != j) {
+					if (a[i][j] != 0) {
+						flag = false;
+					}
+				}
+			}
+			count++;
+		}
+		count = a.length - 1;
+		for (int i = 0; i < a.length; i++) {
+			for (int j = 0; j < a.length; j++) {
+				if (count != j) {
+					if (a[i][j] != 0) {
+						flag = false;
+					}
+				}
+			}
+			count--;
+		}
+		return flag == true;
+	}
+
+	static int steelTempest(int[] ingame) {
+		int value = 0;
+		int count = 0;
+		for (int i = 0; i < ingame.length; i++) {
+			if (value == 2) {
+				value = 0;
+				count++;
+			} else if (ingame[i] == 1) {
+				value++;
+			} else {
+				value = 0;
+			}
+		}
+		return count;
+	}
+
+	static int minValue(int[] values) {
+
+	}
+
+	static boolean gamePlay(int[] time) {
+		int sum = 0;
+		for (int i = 0; i < time.length; i++) {
+			if (i > 0 && i % 2 != 0) {
+				if (time[i] - time[i - 1] >= 5)
+					return true;
+				sum += time[i] - time[i - 1];
+			}
+		}
+		return sum >= 8 ? true : false || time[0] == 8 || time[time.length - 1] == 8;
+	}
+
+	static boolean linePoints(int[][] points) {
+
+	}
+
+	static boolean additionSubArray(int[] arr) {
+		Map<Integer, Integer> map = new HashMap<>();
+		List<Integer> list = new ArrayList<>();
+		for (int i = 1; i < arr.length; i++) {
+			list.add(arr[i] - arr[i - 1]);
+		}
+		if (list.size() < 2) {
+			return false;
+		}
+		for (int i = 1; i < list.size(); i++) {
+			map.put(list.get(i) - list.get(i - 1), 0);
+		}
+		for (int i = 1; i < list.size(); i++) {
+			if (map.containsKey(list.get(i) - list.get(i - 1))) {
+				map.put(list.get(i) - list.get(i - 1), map.get(list.get(i) - list.get(i - 1)) + 1);
+			}
+		}
+		for (Map.Entry<Integer, Integer> integer : map.entrySet()) {
+			if (integer.getValue() > 1) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	static int numberRainbows(int[] colors) {
+		boolean flag = true;
+		int count = 0;
+		int count1 = 0;
+		int a[] = quickSort(colors, 0, colors.length - 1);
+		while (flag == true) {
+			for (int i = 0; i < a.length; i++) {
+				if (a[i] > 0) {
+					a[i] = a[i] - 1;
+					count++;
+				}
+				if (count == 7) {
+					break;
+				}
+			}
+			if (count == 7) {
+				count = 0;
+				count1++;
+				a = quickSort(a, 0, a.length - 1);
+				continue;
+			} else {
+				flag = false;
+			}
+		}
+		return count1;
+	}
+
+	static int[] roboPosition(String run) {
+		int trucOX = 0;
+		int val1 = 0;
+		int val2 = 0;
+		boolean flag = true;
+		String temp = "";
+		String value = "";
+		for (int i = 0; i < run.length(); i++) {
+			if (run.charAt(i) == 44) {
+				if (temp.equals("")) {
+
+				}
+			} else {
+				temp += String.valueOf(run.charAt(i));
+			}
+		}
+		int result[] = { val1, val2 };
+		return result;
+	}
+
+	static boolean linePoints1(int[][] points) {
+		/*
+		 * boolean flag = true; boolean flag1 = true; for (int i = 1; i < points.length;
+		 * i++) { if (points[0][i] != points[0][i-1]) { flag = false; } } for (int i =
+		 * 1; i < points.length; i++) { if (points[i][0] != points[i][0]) { flag1 =
+		 * false; } } boolean flag2 = true; boolean flag3 = true; int min =
+		 * points[0][0]; int min1 = points[0][0]; int max = 0; int max1 = 0;
+		 * 
+		 * for (int i = 0; i < points.length; i++) { if (points[i][0] > max) { max =
+		 * points[i][0]; } if (points[i][0] < min) { min = points[i][0]; } if
+		 * (points[0][i] > max1) { max1 = points[0][i]; } if (points[0][i] < min1) {
+		 * min1 = points[0][i]; } } while (min<=max) { boolean flags = false; for (int i
+		 * = 0; i < points.length; i++) { if (points[i][0]==min) { flags =true; } } if
+		 * (flags==false) { flag2 = false; break; } min+=1; } while (min1<=max1) {
+		 * boolean flags = false; for (int i = 0; i < points.length; i++) { if
+		 * (points[0][i]==min1) { flags =true; } } if (flags==false) { flag3 = false;
+		 * break; } min+=1; } return flag2|| flag3 || flag || flag1;
+		 */
+	}
+
+	public static int[] deleteNth(int[] elements, int maxOccurrences) {
+		// Code here ;)
+		List<Integer> list = new ArrayList<>();
+		for (int i = 0; i < elements.length; i++) {
+			int count = 0;
+			for (int j = 0; j < list.size(); j++) {
+				if (list.get(j) == elements[i]) {
+					count++;
+				}
+			}
+			if (count < maxOccurrences) {
+				list.add(elements[i]);
+			}
+		}
+		int temp[] = new int[list.size()];
+		for (int i = 0; i < temp.length; i++) {
+			temp[i] = list.get(i);
+		}
+		return temp;
+	}
+
+	public static boolean comp(int[] a, int[] b) {
+		if (a == null || b == null || a.length != b.length)
+			return false;
+		long sumA = 0;
+		long sumB = 0;
+		for (int i = 0; i < a.length; i++) {
+			sumA += Math.abs(a[i]);
+			sumB += Math.sqrt(b[i]);
+		}
+
+		return sumA == sumB;
+	}
+
+	public static long[] gap(int g, long m, long n) {
+		// your code
+		while (g + m <= n) {
+			if (m % 2 != 0 && g + m % 2 != 0) {
+				if (MathClasss.isPrime(m) && MathClasss.isPrime(g + m)) {
+					boolean flag = true;
+					long val = m + 1;
+					while (val < (g + m) - 1) {
+						if (MathClasss.isPrime(val)) flag = false;
+						val++;
+					}
+					if (flag) {
+						long temp[] = { m, g + m };
+						return temp;
+					} else {
+						m++;
+						continue;
+					}
+				} else {
+					m++;
+				}
+			} else {
+				m++;
+			}
+		}
+		return null;
+	}
+	public static boolean check(int[][] sudoku) {
+		if (sudoku.length!=9) {
+			return false;
+		}
+		int count = 0;
+		boolean flag = true;
+		while (count<sudoku.length) {
+			for (int j = 1; j <= sudoku.length; j++) {
+				if (j%3==0) {
+					if (!checkSodoku(showSodokuX3X(count,j,sudoku))) {
+						flag = false;
+					}
+				}
+			}
+			count+=3;
+		}
+		return flag;
 	}
 	
+	private static int[][] showSodokuX3X(int i, int j, int[][] sudoku) {
+		// TODO Auto-generated method stub
+		int val = i;
+		int val1;
+		if (j==3) {
+			val1 = 0;
+		}else if (j==6) {
+			val1 = 3;
+		}else  {
+			val1= 6;
+		}
+		int array[][] = new int[3][3];
+		int len = val+3;
+		int c = 0;
+		while (val<len) {
+			int temp = val1;
+			int h = 0;
+			while (temp<j) {
+				array[c][h] = sudoku[val][temp];
+				temp++;
+				h++;
+			}
+			c++;
+			val++;
+		}
+		return array;
+	}
+
+	public static boolean checkSodoku(int[][] sudoku) {
+		 //do your magic
+		boolean flag = true;
+		for (int i = 0; i < sudoku.length; i++) {
+			Set<Integer> set = new HashSet<>();
+			List<Integer> list = new ArrayList<>();
+			for (int j = 0; j < sudoku.length; j++) {
+				set.add(sudoku[i][j]);
+				list.add(sudoku[i][j]);
+			}
+			if (set.size()!=list.size()) {
+				flag = false;
+				break;
+			}
+		}
+		int count = 0;
+		while (count < sudoku.length) {
+			Set<Integer> set = new HashSet<>();
+			List<Integer> list = new ArrayList<>();
+			for (int i = 0; i < sudoku.length; i++) {
+				set.add(sudoku[i][count]);
+				list.add(sudoku[i][count]);
+			}
+			if (set.size()!=list.size()) {
+				flag = false;
+				break;
+			}
+			count++;
+		}
+		
+		return flag;
+    }
 	public static void main(String[] args) {
-		int a[] = {3,2,2,2,2,2};
-		System.out.println(stackofbricks(a));
+		int a[][] = {
+				{5, 3, 4, 6, 7, 8, 9, 1, 2},
+				{6, 7, 2, 1, 9, 5, 3, 4, 8},
+				{1, 9, 8, 3, 4, 2, 5, 6, 7},
+				{8, 5, 9, 7, 6, 1, 4, 2, 3},
+				{4, 2, 6, 8, 5, 3, 7, 9, 1},
+				{7, 1, 3, 9, 2, 4, 8, 5, 6},
+				{9, 6, 1, 5, 3, 7, 2, 8, 4},
+				{2, 8, 7, 4, 1, 9, 6, 3, 5},
+				{1, 0, 0, 3, 4, 2, 5, 6, 0}
+				
+		};
+	
+		//
+		ArrayList<Integer> arrayList = new ArrayList<>();
+
+		System.out.println(check(a));
 	}
 
 }

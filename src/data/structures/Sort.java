@@ -9,20 +9,21 @@ import java.util.Queue;
 import java.util.Stack;
 
 public class Sort {
-	static	public int[] insertionSort(int a[],int n) {
+	static public int[] insertionSort(int a[], int n) {
 		int j;
 		int t = 0;
 		for (int i = 1; i < n; i++) {
-			j = i-1;
+			j = i - 1;
 			t = a[i];
-			while (j>=0 && t<a[j]) {
-				a[j+1] = a[j];
+			while (j >= 0 && t < a[j]) {
+				a[j + 1] = a[j];
 				j--;
 			}
-			a[j+1] = t;
+			a[j + 1] = t;
 		}
 		return a;
 	}
+
 	static int[] bubbleSortArray(int[] arr) {
 		int temp = 0;
 		for (int i = 0; i < arr.length; i++) {
@@ -396,61 +397,87 @@ public class Sort {
 
 		try {
 			for (int i = 0; i < arr.length; i++) {
-				if (i+2==arr.length) {
+				if (i + 2 == arr.length) {
 					count++;
 					break;
 				}
-				if (arr[i+2]==0) {
+				if (arr[i + 2] == 0) {
 					count++;
-					i+=1;
-				}else if (arr[i+2]==1) {
+					i += 1;
+				} else if (arr[i + 2] == 1) {
 					count++;
 				}
-			
+
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
 		return count;
 	}
-	
-	static	int sortLined(int[] a) {
+
+	static int sortLined(int[] a) {
 		if (a.length % 2 != 0) {
 			return -1;
 		}
-		
+
 		int temp = 0;
 		int count = 0;
-		
-		
+
 		List<Integer> list = new ArrayList<>();
 		for (int i = 0; i < a.length; i++) {
 			list.add(a[i]);
 		}
-		
+
 		for (int i = 1; i < a.length; i++) {
-			if (a[i]==a[i-1]) {
+			if (a[i] == a[i - 1]) {
 				for (int j = i; j < a.length; j++) {
-					if (a[j]!=a[i]) {
+					if (a[j] != a[i]) {
 						temp = a[j];
 						a[j] = a[i];
 						a[i] = temp;
-						
+
 					}
 				}
 			}
 		}
 		for (int i = 0; i < a.length; i++) {
-			if (a[i]!=list.get(i)) {
+			if (a[i] != list.get(i)) {
 				count++;
 			}
 		}
-		return count/2;
+		return count / 2;
+	}
+
+	static void sort012(int a[], int arr_size) {
+		int left = 0;
+		int mid = 0;
+		int temp = 0;
+		int right = arr_size - 1;
+		while (mid <= right) {
+			switch (a[mid]) {
+			case 0:
+				temp = a[mid];
+				a[mid] = a[left];
+				a[left] = temp;
+				left++;
+				mid++;
+				break;
+			case 1:
+				mid++;
+				break;
+			case 2: 
+				temp = a[mid];
+				a[mid] = a[right];
+				a[right] = temp;
+				right--;
+				break;
+			}
+		}
 	}
 
 	public static void main(String[] args) {
-		int a[] = {1,0,0,1,0,1};
-
-		System.out.println(sortLined(a));
+		int a[] = { 1, 0, 0, 1, 0, 1 };
+		int arr[] = { 0, 1, 1, 0, 1, 2, 1, 2, 0, 0, 0, 1 };
+		sort012(arr,arr.length);
 	}
 }
