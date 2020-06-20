@@ -1415,28 +1415,55 @@ public class MathClasss {
 		int value = 0;
 		String nhan1Lan = " 1ADGJMPTW*#";
 		String nhan2Lan = "BEHKNQUX";
-		String nhan3Lan = "CFILORVY";;
+		String nhan3Lan = "CFILORVY";
+		;
 		String nhan4Lan = "SZ23456789";
 		String nhan5Lan = "79";
 		phrase = phrase.toUpperCase();
 		for (int i = 0; i < phrase.length(); i++) {
 			if (nhan1Lan.contains(String.valueOf(phrase.charAt(i)))) {
-				value +=1;
+				value += 1;
 			}
 			if (nhan2Lan.contains(String.valueOf(phrase.charAt(i)))) {
-				value +=2;
+				value += 2;
 			}
 			if (nhan3Lan.contains(String.valueOf(phrase.charAt(i)))) {
-				value +=3;
+				value += 3;
 			}
 			if (nhan4Lan.contains(String.valueOf(phrase.charAt(i)))) {
-				value +=4;
+				value += 4;
 			}
 			if (nhan5Lan.contains(String.valueOf(phrase.charAt(i)))) {
-				value +=5;
+				value += 5;
 			}
 		}
 		return value;
+	}
+
+	static int symmetricNumber(int n) {
+		int result = n + Integer.valueOf(new StringBuilder(String.valueOf(n)).reverse().toString());
+		while (!checkSoDoi(result)) {
+			int val = result;
+			result = val + Integer.valueOf(new StringBuilder(String.valueOf(val)).reverse().toString());
+
+		}
+		return result;
+	}
+
+	private static boolean checkSoDoi(int n) {
+		// TODO Auto-generated method stub
+		String val = new String(String.valueOf(n));
+		int mid = val.length() / 2;
+		int l = 0;
+		int r = val.length() - 1;
+		while (l < mid) {
+			if (val.charAt(l) != val.charAt(r)) {
+				return false;
+			}
+			l++;
+			r--;
+		}
+		return true;
 	}
 
 	private static int[] findMaxInArray(int[] temp) {
@@ -1453,9 +1480,21 @@ public class MathClasss {
 		return temp;
 	}
 
+	static	long factorialCalc(int n) {
+		long value = 1;
+		int count = 1;
+		long sum  = 0;
+		while (count <= n) {
+			sum = count * value;
+			value = sum;
+			count++;
+		}
+		return sum;
+	}
+
 	public static void main(String[] args) {
 		int a[] = { 2, 1, 4 };
-		System.out.println(presses("HOW R U"));
+		System.out.println(factorialCalc(0));
 	}
 
 }

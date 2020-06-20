@@ -1936,24 +1936,49 @@ public class Array {
 		
 		return flag;
     }
-	public static void main(String[] args) {
-		int a[][] = {
-				{5, 3, 4, 6, 7, 8, 9, 1, 2},
-				{6, 7, 2, 1, 9, 5, 3, 4, 8},
-				{1, 9, 8, 3, 4, 2, 5, 6, 7},
-				{8, 5, 9, 7, 6, 1, 4, 2, 3},
-				{4, 2, 6, 8, 5, 3, 7, 9, 1},
-				{7, 1, 3, 9, 2, 4, 8, 5, 6},
-				{9, 6, 1, 5, 3, 7, 2, 8, 4},
-				{2, 8, 7, 4, 1, 9, 6, 3, 5},
-				{1, 0, 0, 3, 4, 2, 5, 6, 0}
-				
-		};
+	static	int maxNumberArray(int[] a) {
+		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+		for (int i = 0; i < a.length; i++) {
+			map.put(a[i], a[i]);
+			
+		}
+		int max = 0;
+		for (int i = 0; i < a.length; i++) {
+			if (a[i]>max) {
+				max = a[i];
+			}
+			
+		}
+		max = max-1;
+		while (max > 0) {
+			if (map.containsKey(max)==false) {
+				return max;
+			}
+			max--;
+			
+		}
+		return -1;
+		
+	}
+	public static int[] snail(int[][] array) {
+	     // enjoy
+	} 
 	
-		//
+	static void staircase(int n) {
+		for (int i = 0; i <n; i++) {
+			for (int j = 0; j <=i; j++) {
+				System.out.print("#");
+			}
+			System.out.println("\n");
+		}
+
+	}
+	
+	public static void main(String[] args) {
+		int a[] = {0 ,-1};
 		ArrayList<Integer> arrayList = new ArrayList<>();
 
-		System.out.println(check(a));
+		staircase(4);
 	}
 
 }

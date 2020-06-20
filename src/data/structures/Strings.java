@@ -1985,16 +1985,18 @@ public class Strings {
 
 		return max;
 	}
+
 	public static String makeReadable(int seconds) {
 		// Do something
 		int hour = 0;
 		int minute = 0;
-		int secondss= 0;
-		hour=seconds/60;
-		int soDuGio = seconds%60;
-		
+		int secondss = 0;
+		hour = seconds / 60;
+		int soDuGio = seconds % 60;
+
 		return Integer.toString(seconds);
 	}
+
 	public static String findMidPerm(String strng) {
 		// your code here!
 		List<String> result = new ArrayList<>();
@@ -2002,20 +2004,37 @@ public class Strings {
 			result.add(String.valueOf(strng.charAt(i)));
 		}
 		int count = 0;
-		while (count<strng.length()) {
-			
+		while (count < strng.length()) {
+
 			for (int i = 0; i < array.length; i++) {
-				
+
 			}
-			
-			
-			count++; 
+
+			count++;
 		}
-		
+
 		return "";
 	}
 
+	static String[] restoreIpAddress(String s) {
+
+	}
+
+	public static String lcs(String x, String y) {
+		// your code here
+		String result = "";
+		for (int i = 0; i < y.length(); i++) {
+			if (x.contains(String.valueOf(y.charAt(i)))) {
+				result += String.valueOf(y.charAt(i));
+			} else {
+				break;
+			}
+			
+		}
+		return result;
+	}
+
 	public static void main(String[] args) {
-		
+
 	}
 }
