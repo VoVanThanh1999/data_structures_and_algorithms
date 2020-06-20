@@ -1985,7 +1985,12 @@ public class Strings {
 
 		return max;
 	}
+<<<<<<< HEAD
 
+=======
+	
+	
+>>>>>>> 700e4870c1c509d600977b42d1e1a2301538744b
 	public static String makeReadable(int seconds) {
 		// Do something
 		int hour = 0;
@@ -1999,6 +2004,7 @@ public class Strings {
 
 	public static String findMidPerm(String strng) {
 		// your code here!
+<<<<<<< HEAD
 		List<String> result = new ArrayList<>();
 		for (int i = 0; i < strng.length(); i++) {
 			result.add(String.valueOf(strng.charAt(i)));
@@ -2036,5 +2042,49 @@ public class Strings {
 
 	public static void main(String[] args) {
 
+=======
+		
+		
+		return "";
+	}
+	
+	static String timeConversion(String s) {
+		String kieuGio = s.substring(8,10);
+		int gio = Integer.parseInt(s.substring(0,2));
+		int phut = Integer.parseInt(s.substring(3, 5));
+		int giay = Integer.parseInt(s.substring(6, 8));
+		String phuts = "";
+		String giays = "";
+		if (phut<10) {
+			phuts = "0"+phut;
+		}else {
+			phuts = String.valueOf(phut);
+		}
+		if (giay<10) {
+			giays = "0"+giay;
+		}else {
+			giays = String.valueOf(giay);
+		}
+		if (kieuGio.equals("PM")) {
+			if (gio<12) {
+				gio +=12;
+				return gio+":"+phuts+":"+giays;
+			}else {
+				return gio+":"+phuts+":"+giays;
+			}
+			
+		}else {
+			if (gio>11) {
+				gio -=12;
+				return 	"0"+gio+":"+phuts+":"+giays;
+			}else {
+				return	"0"+gio+":"+phuts+":"+giays;
+			}
+		}
+    } 
+	
+	public static void main(String[] args) {
+		System.out.println(timeConversion("12:40:22AM"));;
+>>>>>>> 700e4870c1c509d600977b42d1e1a2301538744b
 	}
 }

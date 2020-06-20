@@ -1480,6 +1480,7 @@ public class MathClasss {
 		return temp;
 	}
 
+<<<<<<< HEAD
 	static	long factorialCalc(int n) {
 		long value = 1;
 		int count = 1;
@@ -1495,6 +1496,25 @@ public class MathClasss {
 	public static void main(String[] args) {
 		int a[] = { 2, 1, 4 };
 		System.out.println(factorialCalc(0));
+=======
+	static String kangaroo(int x1, int v1, int x2, int v2) {
+		int count = 0;
+		while (count < 10000) {
+			x1 += v1;
+			x2 += v2;
+			if (x1 == x2) {
+				return "YES";
+			}
+			count++;
+		}
+		return "NO";
+	}
+
+
+	public static void main(String[] args) {
+		int a[] = {10, 5, 20, 20, 4, 5, 2, 25 ,1 };
+		System.out.println(breakingRecords(a)[0]+" - "+breakingRecords(a)[1]);
+>>>>>>> 700e4870c1c509d600977b42d1e1a2301538744b
 	}
 
 }

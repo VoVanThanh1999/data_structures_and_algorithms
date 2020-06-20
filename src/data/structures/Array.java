@@ -1936,6 +1936,7 @@ public class Array {
 		
 		return flag;
     }
+<<<<<<< HEAD
 	static	int maxNumberArray(int[] a) {
 		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 		for (int i = 0; i < a.length; i++) {
@@ -1979,6 +1980,105 @@ public class Array {
 		ArrayList<Integer> arrayList = new ArrayList<>();
 
 		staircase(4);
+=======
+	
+	static void miniMaxSum(int[] arr) {
+		long min = arr[0];
+		long max = arr[0];
+		long sum = 0;
+		for (int i = 0; i < arr.length; i++) {
+			sum+=arr[i];
+			if (arr[i]>max) {
+				max = arr[i];
+			}
+			if (arr[i]<min) {
+				min = arr[i];
+			}
+		}
+		System.out.println((sum-max)+" "+(sum-min));
+    }
+	static int birthdayCakeCandles(int[] ar) {
+		int max = ar[0];
+		int count = 0;
+		for (int i = 0; i < ar.length; i++) {
+			if (ar[i]>max) {
+				max = ar[i];
+			}
+		}
+		for (int i = 0; i < ar.length; i++) {
+			if (ar[i]==max) {
+				count++;
+			}
+		}
+		return count;
+    }
+	
+	public static List<Integer> gradingStudents(List<Integer> grades) {
+		// Write your code here
+		List<Integer> output = new ArrayList<>();
+		for (Integer integer : grades) {
+			if (boiSo(integer)-integer<3 && boiSo(integer)>39) {
+				output.add(boiSo(integer));
+			}else {
+				output.add(integer);
+			}
+		}
+		return output;
+	}
+	
+	private static Integer boiSo(Integer integer) {
+		// TODO Auto-generated method stub
+		int val = integer+1;
+		while (val%5!=0) {
+			val++;
+		}
+		return val;
+	}
+	
+	static int[] breakingRecords(int[] scores) {
+		int max = scores[0];
+		int min = scores[0];
+		int countMax = 0;
+		int countMin = 0;
+		int temp[] =new int [2];
+		for (int i = 1; i < scores.length; i++) {
+			if (scores[i]>max) {
+				max = scores[i];
+				countMax++;
+			}
+			if (scores[i]<min) {
+				min = scores[i];
+				countMin++;
+			}
+		}
+		temp[0] = countMax;
+		temp[1] = countMin;
+		return temp;
+	}
+	
+	static int birthday(List<Integer> s, int d, int m) {
+		int count = 0;
+		for (int i = 0; i <=s.size()-m; i++) {
+			int sum = 0;
+			for (int j = i; j <i+m; j++) {
+				sum+=s.get(j);
+			}
+			if (sum==d) {
+				count++;
+			}
+		}
+		return count;
+    }
+	
+	static int migratoryBirds(List<Integer> arr) {
+		
+
+    }
+	
+	public static void main(String[] args) {
+		int a[] = {1,3,2,6,1,2};
+		System.out.println(divisibleSumPairs(6,3,a));
+>>>>>>> 700e4870c1c509d600977b42d1e1a2301538744b
 	}
 
 }
