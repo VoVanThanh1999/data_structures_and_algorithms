@@ -1415,25 +1415,26 @@ public class MathClasss {
 		int value = 0;
 		String nhan1Lan = " 1ADGJMPTW*#";
 		String nhan2Lan = "BEHKNQUX";
-		String nhan3Lan = "CFILORVY";;
+		String nhan3Lan = "CFILORVY";
+		;
 		String nhan4Lan = "SZ23456789";
 		String nhan5Lan = "79";
 		phrase = phrase.toUpperCase();
 		for (int i = 0; i < phrase.length(); i++) {
 			if (nhan1Lan.contains(String.valueOf(phrase.charAt(i)))) {
-				value +=1;
+				value += 1;
 			}
 			if (nhan2Lan.contains(String.valueOf(phrase.charAt(i)))) {
-				value +=2;
+				value += 2;
 			}
 			if (nhan3Lan.contains(String.valueOf(phrase.charAt(i)))) {
-				value +=3;
+				value += 3;
 			}
 			if (nhan4Lan.contains(String.valueOf(phrase.charAt(i)))) {
-				value +=4;
+				value += 4;
 			}
 			if (nhan5Lan.contains(String.valueOf(phrase.charAt(i)))) {
-				value +=5;
+				value += 5;
 			}
 		}
 		return value;
@@ -1453,9 +1454,23 @@ public class MathClasss {
 		return temp;
 	}
 
+	static String kangaroo(int x1, int v1, int x2, int v2) {
+		int count = 0;
+		while (count < 10000) {
+			x1 += v1;
+			x2 += v2;
+			if (x1 == x2) {
+				return "YES";
+			}
+			count++;
+		}
+		return "NO";
+	}
+
+
 	public static void main(String[] args) {
-		int a[] = { 2, 1, 4 };
-		System.out.println(presses("HOW R U"));
+		int a[] = {10, 5, 20, 20, 4, 5, 2, 25 ,1 };
+		System.out.println(breakingRecords(a)[0]+" - "+breakingRecords(a)[1]);
 	}
 
 }
