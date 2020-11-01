@@ -1936,7 +1936,7 @@ public class Array {
 		
 		return flag;
     }
-<<<<<<< HEAD
+
 	static	int maxNumberArray(int[] a) {
 		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 		for (int i = 0; i < a.length; i++) {
@@ -1975,13 +1975,7 @@ public class Array {
 
 	}
 	
-	public static void main(String[] args) {
-		int a[] = {0 ,-1};
-		ArrayList<Integer> arrayList = new ArrayList<>();
 
-		staircase(4);
-=======
-	
 	static void miniMaxSum(int[] arr) {
 		long min = arr[0];
 		long max = arr[0];
@@ -2070,15 +2064,32 @@ public class Array {
 		return count;
     }
 	
-	static int migratoryBirds(List<Integer> arr) {
-		
-
-    }
+	static	int sumNumbersLargerAverage(int[] a){
+		try {
+			int total = 0;
+			int sum = 0;
+			for (int i = 0; i < a.length; i++) 
+				total+=a[i];		
+			total/=a.length;
+			for (int i = 0; i < a.length; i++) 
+				sum+=a[i]>total?a[i]:0;
+			return sum>0?sum:0;
+		} catch (Exception e) {
+			// TODO: handle exception
+			return 0;
+		}
+	}
+	
+	static String getTagContentExtractor(String temp) {
+			
+		return null;
+	}
 	
 	public static void main(String[] args) {
-		int a[] = {1,3,2,6,1,2};
-		System.out.println(divisibleSumPairs(6,3,a));
->>>>>>> 700e4870c1c509d600977b42d1e1a2301538744b
+		int a[] = {};
+		
+		System.out.println(sumNumbersLargerAverage(a));
 	}
-
+	
+	
 }

@@ -1,8 +1,12 @@
 package data.structures;
 
+import java.util.Deque;
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Queue {
 	
@@ -123,7 +127,33 @@ public class Queue {
 		}
 	}
 	
+	public static int javaDequeue(Deque<Integer> deque,int n) {
+		List<Integer> list = new LinkedList<>(deque);	
+		int max = 0;
+		for (int i = 0; i <=list.size()-n ; i++) {
+			Set<Integer> hashSets = new HashSet<>();
+			int count = i;
+			while (count<i+n) {
+				hashSets.add(list.get(count));
+				count++;
+			}
+			if (hashSets.size()>max) {
+				System.out.println(hashSets.size());
+			}
+		}
+		return max;
+	}
+	
 	public static void main(String[] args) {
-		saveNumberPhone();
+		/*saveNumberPhone();*/
+		Deque<Integer> deque =new LinkedList<>();
+		deque.offer(5 );
+		deque.offer(3 );
+		deque.offer(5 );
+		deque.offer(2 );
+		deque.offer(3);
+		deque.offer(2);
+		System.out.println(javaDequeue(deque,3));
+	
 	}
 }

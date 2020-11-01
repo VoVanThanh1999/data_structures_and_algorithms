@@ -1985,12 +1985,7 @@ public class Strings {
 
 		return max;
 	}
-<<<<<<< HEAD
 
-=======
-	
-	
->>>>>>> 700e4870c1c509d600977b42d1e1a2301538744b
 	public static String makeReadable(int seconds) {
 		// Do something
 		int hour = 0;
@@ -2004,7 +1999,7 @@ public class Strings {
 
 	public static String findMidPerm(String strng) {
 		// your code here!
-<<<<<<< HEAD
+
 		List<String> result = new ArrayList<>();
 		for (int i = 0; i < strng.length(); i++) {
 			result.add(String.valueOf(strng.charAt(i)));
@@ -2040,14 +2035,6 @@ public class Strings {
 		return result;
 	}
 
-	public static void main(String[] args) {
-
-=======
-		
-		
-		return "";
-	}
-	
 	static String timeConversion(String s) {
 		String kieuGio = s.substring(8,10);
 		int gio = Integer.parseInt(s.substring(0,2));
@@ -2082,9 +2069,65 @@ public class Strings {
 			}
 		}
     } 
+	static	String distanceToZ(int[] a) {
+		String result = "";
+		for (int i = 0; i < a.length; i++) {
+			char kyTu = (char) (123-a[i]);
+			result += a[i] == -1?" ":String.valueOf(kyTu);
+		}
+		return result;
+	}
+	
+	static List<Long>sequenceNumber(long l, long r) {
+		 long[] a ={1, 2, 3, 4, 5, 6, 7, 8, 9,
+                 12, 23, 34, 45, 56, 67, 78, 89,
+                 123, 234, 345, 456, 567, 678, 789,
+                 1234, 2345, 3456, 4567, 5678, 6789,
+                 12345, 23456, 34567, 45678, 56789,
+                 123456, 234567, 345678, 456789,
+                 1234567, 2345678, 3456789,
+                 12345678, 23456789,
+                 123456789};
+	
+		 List<Long> list = new ArrayList<>();
+		 for (int j = 0; j < a.length; j++) {
+			if (a[j]>=l && a[j]<=r) {
+				list.add(a[j]);
+			}
+		}
+		 return list;
+	}
+	
+	public static boolean isBalanced(String result){
+		Stack<Character> stack = new Stack<>();
+		for (Character c : result.toCharArray()) {
+			switch (c) {
+			case '{':
+			case '(':
+			case '[':
+				stack.push(c);
+				break;
+			case '}':
+				if (stack.isEmpty() || stack.pop()!='{') {
+					return false;
+				}
+				break;
+			case ')':
+				if(stack.isEmpty() || stack.pop()!='(') {
+					return false;
+				}
+				break;
+			case ']':
+				if(stack.isEmpty() || stack.pop()!='[') {
+					return false;
+				}
+				break;
+			}
+		}
+		return stack.isEmpty();
+    }
 	
 	public static void main(String[] args) {
-		System.out.println(timeConversion("12:40:22AM"));;
->>>>>>> 700e4870c1c509d600977b42d1e1a2301538744b
+		System.out.println(isBalanced("{[]()}"));
 	}
 }
