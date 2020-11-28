@@ -1,6 +1,11 @@
 package data.structures;
 
  import java.util.Scanner;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class RegularExpression {
 
@@ -110,8 +115,38 @@ public class RegularExpression {
 		return s.matches("^(Mr?s|[MDE]r).[a-zA-Z]{1,}$");
 	}
 	
+	public static boolean matchingSameTextAgain(String s) {
+		return s.matches("^([a-z]\\w\\s\\W\\d\\D[A-Z][a-z,A-Z][aieouAEIOU]\\S)\\1$");
+	}
+	
+	public static boolean detectedHtmlTags(String s) {
+		 Pattern pattern = Pattern.compile("<*");
+	}
+	
 	public static void main(String[] args) {
-		System.out.println(alternativeMatching("Mr.VKDoshi."));
+		Scanner in = new Scanner(System.in);
+		  StringBuilder sb = new StringBuilder();
+	        while(in.hasNextLine()) {
+	            sb.append(in.nextLine());
+	        }
+
+	        Pattern pattern = Pattern.compile("< *([a-z0-9]+)[^>]*>");
+	        Matcher matcher = pattern.matcher(sb);
+	        SortedSet<String> tags = new TreeSet<String>();
+	        while (matcher.find()) {
+	            tags.add(matcher.group(1));
+	        }
+
+	        boolean first = true;
+	        for (String tag : tags) {
+	            if (!first) {
+	                System.out.print(";");
+	            } else {
+	                first = false;
+	            }
+	            System.out.print(tag);
+	        }
+	        System.out.println("");
 		
 	
 	}

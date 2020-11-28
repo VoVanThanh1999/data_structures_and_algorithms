@@ -2030,75 +2030,70 @@ public class Strings {
 			} else {
 				break;
 			}
-			
+
 		}
 		return result;
 	}
 
 	static String timeConversion(String s) {
-		String kieuGio = s.substring(8,10);
-		int gio = Integer.parseInt(s.substring(0,2));
+		String kieuGio = s.substring(8, 10);
+		int gio = Integer.parseInt(s.substring(0, 2));
 		int phut = Integer.parseInt(s.substring(3, 5));
 		int giay = Integer.parseInt(s.substring(6, 8));
 		String phuts = "";
 		String giays = "";
-		if (phut<10) {
-			phuts = "0"+phut;
-		}else {
+		if (phut < 10) {
+			phuts = "0" + phut;
+		} else {
 			phuts = String.valueOf(phut);
 		}
-		if (giay<10) {
-			giays = "0"+giay;
-		}else {
+		if (giay < 10) {
+			giays = "0" + giay;
+		} else {
 			giays = String.valueOf(giay);
 		}
 		if (kieuGio.equals("PM")) {
-			if (gio<12) {
-				gio +=12;
-				return gio+":"+phuts+":"+giays;
-			}else {
-				return gio+":"+phuts+":"+giays;
+			if (gio < 12) {
+				gio += 12;
+				return gio + ":" + phuts + ":" + giays;
+			} else {
+				return gio + ":" + phuts + ":" + giays;
 			}
-			
-		}else {
-			if (gio>11) {
-				gio -=12;
-				return 	"0"+gio+":"+phuts+":"+giays;
-			}else {
-				return	"0"+gio+":"+phuts+":"+giays;
+
+		} else {
+			if (gio > 11) {
+				gio -= 12;
+				return "0" + gio + ":" + phuts + ":" + giays;
+			} else {
+				return "0" + gio + ":" + phuts + ":" + giays;
 			}
 		}
-    } 
-	static	String distanceToZ(int[] a) {
+	}
+
+	static String distanceToZ(int[] a) {
 		String result = "";
 		for (int i = 0; i < a.length; i++) {
-			char kyTu = (char) (123-a[i]);
-			result += a[i] == -1?" ":String.valueOf(kyTu);
+			char kyTu = (char) (123 - a[i]);
+			result += a[i] == -1 ? " " : String.valueOf(kyTu);
 		}
 		return result;
 	}
-	
-	static List<Long>sequenceNumber(long l, long r) {
-		 long[] a ={1, 2, 3, 4, 5, 6, 7, 8, 9,
-                 12, 23, 34, 45, 56, 67, 78, 89,
-                 123, 234, 345, 456, 567, 678, 789,
-                 1234, 2345, 3456, 4567, 5678, 6789,
-                 12345, 23456, 34567, 45678, 56789,
-                 123456, 234567, 345678, 456789,
-                 1234567, 2345678, 3456789,
-                 12345678, 23456789,
-                 123456789};
-	
-		 List<Long> list = new ArrayList<>();
-		 for (int j = 0; j < a.length; j++) {
-			if (a[j]>=l && a[j]<=r) {
+
+	static List<Long> sequenceNumber(long l, long r) {
+		long[] a = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 23, 34, 45, 56, 67, 78, 89, 123, 234, 345, 456, 567, 678, 789, 1234,
+				2345, 3456, 4567, 5678, 6789, 12345, 23456, 34567, 45678, 56789, 123456, 234567, 345678, 456789,
+				1234567, 2345678, 3456789, 12345678, 23456789, 123456789 };
+
+		List<Long> list = new ArrayList<>();
+		for (int j = 0; j < a.length; j++) {
+			if (a[j] >= l && a[j] <= r) {
 				list.add(a[j]);
 			}
 		}
-		 return list;
+		return list;
 	}
-	
-	public static boolean isBalanced(String result){
+
+	public static boolean isBalanced(String result) {
 		Stack<Character> stack = new Stack<>();
 		for (Character c : result.toCharArray()) {
 			switch (c) {
@@ -2108,26 +2103,63 @@ public class Strings {
 				stack.push(c);
 				break;
 			case '}':
-				if (stack.isEmpty() || stack.pop()!='{') {
+				if (stack.isEmpty() || stack.pop() != '{') {
 					return false;
 				}
 				break;
 			case ')':
-				if(stack.isEmpty() || stack.pop()!='(') {
+				if (stack.isEmpty() || stack.pop() != '(') {
 					return false;
 				}
 				break;
 			case ']':
-				if(stack.isEmpty() || stack.pop()!='[') {
+				if (stack.isEmpty() || stack.pop() != '[') {
 					return false;
 				}
 				break;
 			}
 		}
 		return stack.isEmpty();
-    }
-	
+	}
+
+	static public String stringTask2(String str) {
+		String s = ".";
+		for (int i = 0; i < str.length(); i++) {
+			if (String.valueOf(str.charAt(i)).matches("[aAoOyYeEuUlL ]")) {
+				if (!String.valueOf(s.charAt(s.length() - 1)).equals("."))
+					s += ".";
+			} else {
+				if (!String.valueOf(s.charAt(s.length() - 1)).equals(".")) {
+					s += ".";
+					s += String.valueOf(str.charAt(i)).toLowerCase();
+				} else {
+					s += String.valueOf(str.charAt(i)).toLowerCase();
+				}
+			}
+		}
+
+		return String.valueOf(s.charAt(s.length() - 1)).equals(".") ? s.substring(0, s.length() - 1) : s;
+	}
+
+	static public String[] vaildPassword(String[] arr) {
+		List<String> strings = new ArrayList<>();
+		String regex1 = "[a-z]*";
+		String regex2 = "[A-Z]*";
+		String regex3 = "[0-9]*";
+		for (int i = 0; i < arr.length; i++) {
+			if (arr[i].matches(regex1) || arr[i].matches(regex2) || arr[i].matches(regex3)) {
+				strings.add(arr[i]);
+			}
+		}
+		String[] rs = new String[strings.size()];
+		for (int i = 0; i < rs.length; i++) {
+			rs[i] = strings.get(i);
+		}
+		return rs;
+	}
+
 	public static void main(String[] args) {
-		System.out.println(isBalanced("{[]()}"));
+		String s[] = { "321312", "bc", "cd" };
+		System.out.println(vaildPassword(s));
 	}
 }

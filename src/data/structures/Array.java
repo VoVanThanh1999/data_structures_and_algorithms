@@ -1,6 +1,8 @@
 package data.structures;
+
 import java.util.HashSet;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.List;
 import java.util.Collections;
@@ -12,6 +14,7 @@ import java.util.Scanner;
 import java.util.Stack;
 import java.util.stream.Stream;
 import javax.crypto.spec.IvParameterSpec;
+
 public class Array {
 	static Scanner sc = new Scanner(System.in);
 
@@ -503,10 +506,10 @@ public class Array {
 		int j = r;
 		int temp = 0;
 		while (i <= j) {
-			while (pivot < a[i]) {
+			while (pivot > a[i]) {
 				i++;
 			}
-			while (pivot > a[j]) {
+			while (pivot < a[j]) {
 				j--;
 			}
 			if (i <= j) {
@@ -1838,7 +1841,8 @@ public class Array {
 					boolean flag = true;
 					long val = m + 1;
 					while (val < (g + m) - 1) {
-						if (MathClasss.isPrime(val)) flag = false;
+						if (MathClasss.isPrime(val))
+							flag = false;
 						val++;
 					}
 					if (flag) {
@@ -1857,43 +1861,44 @@ public class Array {
 		}
 		return null;
 	}
+
 	public static boolean check(int[][] sudoku) {
-		if (sudoku.length!=9) {
+		if (sudoku.length != 9) {
 			return false;
 		}
 		int count = 0;
 		boolean flag = true;
-		while (count<sudoku.length) {
+		while (count < sudoku.length) {
 			for (int j = 1; j <= sudoku.length; j++) {
-				if (j%3==0) {
-					if (!checkSodoku(showSodokuX3X(count,j,sudoku))) {
+				if (j % 3 == 0) {
+					if (!checkSodoku(showSodokuX3X(count, j, sudoku))) {
 						flag = false;
 					}
 				}
 			}
-			count+=3;
+			count += 3;
 		}
 		return flag;
 	}
-	
+
 	private static int[][] showSodokuX3X(int i, int j, int[][] sudoku) {
 		// TODO Auto-generated method stub
 		int val = i;
 		int val1;
-		if (j==3) {
+		if (j == 3) {
 			val1 = 0;
-		}else if (j==6) {
+		} else if (j == 6) {
 			val1 = 3;
-		}else  {
-			val1= 6;
+		} else {
+			val1 = 6;
 		}
 		int array[][] = new int[3][3];
-		int len = val+3;
+		int len = val + 3;
 		int c = 0;
-		while (val<len) {
+		while (val < len) {
 			int temp = val1;
 			int h = 0;
-			while (temp<j) {
+			while (temp < j) {
 				array[c][h] = sudoku[val][temp];
 				temp++;
 				h++;
@@ -1905,7 +1910,7 @@ public class Array {
 	}
 
 	public static boolean checkSodoku(int[][] sudoku) {
-		 //do your magic
+		// do your magic
 		boolean flag = true;
 		for (int i = 0; i < sudoku.length; i++) {
 			Set<Integer> set = new HashSet<>();
@@ -1914,7 +1919,7 @@ public class Array {
 				set.add(sudoku[i][j]);
 				list.add(sudoku[i][j]);
 			}
-			if (set.size()!=list.size()) {
+			if (set.size() != list.size()) {
 				flag = false;
 				break;
 			}
@@ -1927,120 +1932,121 @@ public class Array {
 				set.add(sudoku[i][count]);
 				list.add(sudoku[i][count]);
 			}
-			if (set.size()!=list.size()) {
+			if (set.size() != list.size()) {
 				flag = false;
 				break;
 			}
 			count++;
 		}
-		
-		return flag;
-    }
 
-	static	int maxNumberArray(int[] a) {
+		return flag;
+	}
+
+	static int maxNumberArray(int[] a) {
 		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 		for (int i = 0; i < a.length; i++) {
 			map.put(a[i], a[i]);
-			
+
 		}
 		int max = 0;
 		for (int i = 0; i < a.length; i++) {
-			if (a[i]>max) {
+			if (a[i] > max) {
 				max = a[i];
 			}
-			
+
 		}
-		max = max-1;
+		max = max - 1;
 		while (max > 0) {
-			if (map.containsKey(max)==false) {
+			if (map.containsKey(max) == false) {
 				return max;
 			}
 			max--;
-			
+
 		}
 		return -1;
-		
+
 	}
+
 	public static int[] snail(int[][] array) {
-	     // enjoy
-	} 
-	
+		// enjoy
+	}
+
 	static void staircase(int n) {
-		for (int i = 0; i <n; i++) {
-			for (int j = 0; j <=i; j++) {
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j <= i; j++) {
 				System.out.print("#");
 			}
 			System.out.println("\n");
 		}
 
 	}
-	
 
 	static void miniMaxSum(int[] arr) {
 		long min = arr[0];
 		long max = arr[0];
 		long sum = 0;
 		for (int i = 0; i < arr.length; i++) {
-			sum+=arr[i];
-			if (arr[i]>max) {
+			sum += arr[i];
+			if (arr[i] > max) {
 				max = arr[i];
 			}
-			if (arr[i]<min) {
+			if (arr[i] < min) {
 				min = arr[i];
 			}
 		}
-		System.out.println((sum-max)+" "+(sum-min));
-    }
+		System.out.println((sum - max) + " " + (sum - min));
+	}
+
 	static int birthdayCakeCandles(int[] ar) {
 		int max = ar[0];
 		int count = 0;
 		for (int i = 0; i < ar.length; i++) {
-			if (ar[i]>max) {
+			if (ar[i] > max) {
 				max = ar[i];
 			}
 		}
 		for (int i = 0; i < ar.length; i++) {
-			if (ar[i]==max) {
+			if (ar[i] == max) {
 				count++;
 			}
 		}
 		return count;
-    }
-	
+	}
+
 	public static List<Integer> gradingStudents(List<Integer> grades) {
 		// Write your code here
 		List<Integer> output = new ArrayList<>();
 		for (Integer integer : grades) {
-			if (boiSo(integer)-integer<3 && boiSo(integer)>39) {
+			if (boiSo(integer) - integer < 3 && boiSo(integer) > 39) {
 				output.add(boiSo(integer));
-			}else {
+			} else {
 				output.add(integer);
 			}
 		}
 		return output;
 	}
-	
+
 	private static Integer boiSo(Integer integer) {
 		// TODO Auto-generated method stub
-		int val = integer+1;
-		while (val%5!=0) {
+		int val = integer + 1;
+		while (val % 5 != 0) {
 			val++;
 		}
 		return val;
 	}
-	
+
 	static int[] breakingRecords(int[] scores) {
 		int max = scores[0];
 		int min = scores[0];
 		int countMax = 0;
 		int countMin = 0;
-		int temp[] =new int [2];
+		int temp[] = new int[2];
 		for (int i = 1; i < scores.length; i++) {
-			if (scores[i]>max) {
+			if (scores[i] > max) {
 				max = scores[i];
 				countMax++;
 			}
-			if (scores[i]<min) {
+			if (scores[i] < min) {
 				min = scores[i];
 				countMin++;
 			}
@@ -2049,47 +2055,192 @@ public class Array {
 		temp[1] = countMin;
 		return temp;
 	}
-	
+
 	static int birthday(List<Integer> s, int d, int m) {
 		int count = 0;
-		for (int i = 0; i <=s.size()-m; i++) {
+		for (int i = 0; i <= s.size() - m; i++) {
 			int sum = 0;
-			for (int j = i; j <i+m; j++) {
-				sum+=s.get(j);
+			for (int j = i; j < i + m; j++) {
+				sum += s.get(j);
 			}
-			if (sum==d) {
+			if (sum == d) {
 				count++;
 			}
 		}
 		return count;
-    }
-	
-	static	int sumNumbersLargerAverage(int[] a){
+	}
+
+	static int sumNumbersLargerAverage(int[] a) {
 		try {
 			int total = 0;
 			int sum = 0;
-			for (int i = 0; i < a.length; i++) 
-				total+=a[i];		
-			total/=a.length;
-			for (int i = 0; i < a.length; i++) 
-				sum+=a[i]>total?a[i]:0;
-			return sum>0?sum:0;
+			for (int i = 0; i < a.length; i++)
+				total += a[i];
+			total /= a.length;
+			for (int i = 0; i < a.length; i++)
+				sum += a[i] > total ? a[i] : 0;
+			return sum > 0 ? sum : 0;
 		} catch (Exception e) {
 			// TODO: handle exception
 			return 0;
 		}
 	}
-	
+
 	static String getTagContentExtractor(String temp) {
-			
+
 		return null;
 	}
-	
-	public static void main(String[] args) {
-		int a[] = {};
-		
-		System.out.println(sumNumbersLargerAverage(a));
+
+	static int[] breakTime(int[] scores) {
+		int highestScore = scores[0];
+		int lowestScore = scores[0];
+		int countMax = 0;
+		int countMin = 0;
+		int kyLuatDiem[] = new int[2];
+		for (int i = 1; i < scores.length; i++) {
+			if (scores[i] > highestScore) {
+				countMax++;
+				highestScore = scores[i];
+			}
+			if (scores[i] < lowestScore) {
+				countMin++;
+				lowestScore = scores[i];
+			}
+		}
+		kyLuatDiem[0] = countMax;
+		kyLuatDiem[1] = countMin;
+		return kyLuatDiem;
 	}
-	
-	
+
+	static int countOfTimes(int h, int d, int m, String S) {
+		boolean kiemTraNamNhuan = isNamNhuan(Integer.valueOf(S));
+		if (m < 13) {
+			if (m == 1 || m == 3 || m == 5 || m == 7 || m == 8 || m == 10 || m == 12) {
+				return (31 * 24 / h) + 31 / d;
+			} else {
+				if (kiemTraNamNhuan && m == 2) {
+					return (29 * 24 / h) + 29 / d;
+				} else if (m == 2) {
+					return (28 * 24 / h) + 28 / d;
+				} else {
+					return (29 * 24 / h) + 29 / d;
+				}
+			}
+		} else {
+			return -1;
+		}
+	}
+
+	private static boolean isNamNhuan(Integer year) {
+		if (year % 4 == 0) {
+			if (year % 100 != 0) {
+				return true;
+			} else {
+				if (year % 400 == 0) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+		return false;
+	}
+
+	static int sockMerchant(int[] sizes) {
+		quickSort(sizes, 0, sizes.length - 1);
+		int count = 1;
+		int numSock = 0;
+		for (int i = 1; i < sizes.length; i++) {
+			if (sizes[i] == sizes[i - 1]) {
+				count++;
+			} else {
+				count = 1;
+			}
+			if (count % 2 == 0)
+				numSock++;
+		}
+		return numSock;
+	}
+
+	static int lotsOfPie(int n, int k, int[] pies) {
+		int max = 0;
+		for (int i = 0; i < pies.length - k + 1; i++) {
+			int temp_Sum = 0;
+			for (int j = 0; j < k; j++) {
+				temp_Sum += pies[i + j];
+			}
+			if (temp_Sum > max)
+				max = temp_Sum;
+		}
+		return max > 0 ? max : -1;
+	}
+
+	public static List<Integer> stringAnagram(List<String> dictionary, List<String> query) {
+
+		List<Integer> s = new ArrayList<>();
+		for (int i = 0; i < query.size(); i++) {
+			query.set(i, sortChing(query.get(i)));
+		}
+
+		for (int i = 0; i < dictionary.size(); i++) {
+			dictionary.set(i, sortChing(dictionary.get(i)));
+		}
+
+		Map<String, Integer> map = new HashMap<>();
+
+		for (int i = 0; i < query.size(); i++) {
+			map.put(query.get(i), 0);
+		}
+
+		for (int i = 0; i < dictionary.size(); i++) {
+			if (map.containsKey(dictionary.get(i))) {
+				map.put(dictionary.get(i), map.get(dictionary.get(i)) + 1);
+			}
+		}
+
+		for (int i = 0; i < query.size(); i++) {
+			int val = map.get(query.get(i));
+			s.add(val);
+		}
+
+		return s;
+
+	}
+
+	public static String sortChing(String s) {
+		char tempArray[] = s.toCharArray();
+		Arrays.sort(tempArray);
+		return new String(tempArray);
+	}
+
+	public static String decryptPassword(String s) {
+		StringBuffer st = new StringBuffer(s);
+		int l = 0;
+		for (int i = st.length(); i > 1; i--) {
+			if (Character.isDigit(st.charAt(i)) && Integer.valueOf(st.toString().charAt(l)) ==0) {
+				int val = Integer.valueOf(st.toString().charAt(l));
+				st.deleteCharAt(i);
+				st.insert(i, val);
+				st.deleteCharAt(l);
+				l++;
+			}
+			if (String.valueOf(st.toString().charAt(i)).equals("*")) {
+				String val1 = String.valueOf(st.charAt(i-1));
+				String val2 = String.valueOf(st.charAt(i-2));
+				st.deleteCharAt(i-1);
+				st.insert(i-1, val2);
+				st.deleteCharAt(i-2);
+				st.insert(i-2, val1);
+				st.deleteCharAt(i);
+			}
+		}
+		return st.toString();
+	}
+
+	public static void main(String[] args) {
+		int a[] = { 18, 22, -3, 13, 39, 2, 12, 33, 40, 33, 20, -3 };
+
+		System.out.println(decryptPassword("51Pa*0Lp*0e"));
+	}
+
 }

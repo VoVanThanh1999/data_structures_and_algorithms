@@ -807,9 +807,34 @@ public class Count {
 		return count;
 	}
 
+	public static int stoneGame(int n) {
+		for (int i = 0; i < 1000; i++) {
+			for (int j = 0; j < 1000; j++) {
+				for (int k = 0; k < 1000; k++) {
+					int val = i*20;
+					int val1 = j*9;
+					int val2 = k*6;
+					if (val == n) {
+						return i;
+					}
+					if (val1 == n) {
+						return j;
+					}
+					if (val2 == n) {
+						return k;
+					}
+					long value = (i*20)+(j*9)+(k*6);
+					
+					if (value == n) 
+						return i+j+k;
+				}
+			}
+		}
+		return -1;
+	}
+	
 	public static void main(String[] args) {
-		System.out.println(ten(15));
-		System.out.println(dontGiveMeFive(1,8));
+		System.out.println(stoneGame(18));
 	}
 
 }

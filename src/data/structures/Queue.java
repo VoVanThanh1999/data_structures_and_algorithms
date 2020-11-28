@@ -9,90 +9,91 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class Queue {
-	
+
 	Node front;
 	Node rear;
 	int length = 0;
-	
-	public static class Node{
+
+	public static class Node {
 		int data;
 		private Node next;
+
 		public Node(int data) {
 			super();
 			this.data = data;
 			this.next = null;
 		}
 	}
-	
+
 	public boolean isEmpty() {
-		return length ==0;
+		return length == 0;
 	}
-	
+
 	public int enqueue(int data) {
 		Node node = new Node(data);
 		if (isEmpty()) {
-			front= node;
+			front = node;
 			rear = node;
-		}else {
-			node.next=front;
-			front=node;
+		} else {
+			node.next = front;
+			front = node;
 		}
 		length++;
 		return node.data;
 	}
-	
+
 	public int dequeue() {
 		if (isEmpty()) {
 			throw new NoSuchElementException();
 		}
 		int result = front.data;
-		front=front.next;
+		front = front.next;
 		if (front == null) {
 			rear = null;
 		}
 		length--;
 		return result;
 	}
-	
+
 	public void show() {
 		Node node = front;
-		while (node.next!=null) {
-			System.out.print(node.data +" -> ");
-			node=node.next;
+		while (node.next != null) {
+			System.out.print(node.data + " -> ");
+			node = node.next;
 		}
-		System.out.print(node.data +" -> ");
+		System.out.print(node.data + " -> ");
 	}
-	
-	static	boolean isPrime(int n) {
-		if (n<2)
+
+	static boolean isPrime(int n) {
+		if (n < 2)
 			return false;
 		for (int i = 2; i < Math.sqrt(n); i++) {
-			if (n%i==0) 
+			if (n % i == 0)
 				return false;
 		}
 		return true;
 	}
-	
+
 	static void superPrimeNumber() {
 		Scanner sc = new Scanner(System.in);
 		java.util.Queue<Integer> queue = new LinkedList<Integer>();
 		int n = sc.nextInt();
-		for (int i =2;  i < 10 && i<=n ; i++) {
-			if (isPrime(i)) 
+		for (int i = 2; i < 10 && i <= n; i++) {
+			if (isPrime(i))
 				queue.offer(i);
 		}
 		while (!queue.isEmpty()) {
 			for (int i = 1; i <= 9; i++) {
-				int k = queue.element()*10+i;
-				if (isPrime(k)&& k < n) {
+				int k = queue.element() * 10 + i;
+				if (isPrime(k) && k < n) {
 					queue.offer(k);
 				}
 			}
-			System.out.print(queue.element()+" -> ");
+			System.out.print(queue.element() + " -> ");
 			queue.poll();
 		}
 	}
-	
+
 	public static void saveNumberPhone() {
 		Scanner sc = new Scanner(System.in);
 		java.util.Queue<Integer> q = new LinkedList<>();
@@ -106,13 +107,13 @@ public class Queue {
 			a[i] = sc.nextInt();
 		}
 		int k = sc.nextInt();
-		
+
 		for (int i = 0; i < n; i++) {
 			if (!b[a[i]]) {
-				if (q.size()<k) {
+				if (q.size() < k) {
 					b[a[i]] = true;
 					q.offer(a[i]);
-				}else {
+				} else {
 					b[q.element()] = false;
 					b[a[i]] = true;
 					q.offer(a[i]);
@@ -120,40 +121,39 @@ public class Queue {
 				}
 			}
 		}
-		
+
 		while (!q.isEmpty()) {
 			System.out.print(q.poll());
-			
+
 		}
 	}
-	
-	public static int javaDequeue(Deque<Integer> deque,int n) {
-		List<Integer> list = new LinkedList<>(deque);	
+
+	public static int javaDequeue(Deque<Integer> deque, int n) {
+		List<Integer> list = new LinkedList<>(deque);
 		int max = 0;
-		for (int i = 0; i <=list.size()-n ; i++) {
+		for (int i = 0; i <= list.size() - n; i++) {
 			Set<Integer> hashSets = new HashSet<>();
 			int count = i;
-			while (count<i+n) {
+			while (count < i + n) {
 				hashSets.add(list.get(count));
 				count++;
 			}
-			if (hashSets.size()>max) {
+			if (hashSets.size() > max) {
 				System.out.println(hashSets.size());
 			}
 		}
 		return max;
 	}
-	
+
 	public static void main(String[] args) {
-		/*saveNumberPhone();*/
-		Deque<Integer> deque =new LinkedList<>();
-		deque.offer(5 );
-		deque.offer(3 );
-		deque.offer(5 );
-		deque.offer(2 );
-		deque.offer(3);
-		deque.offer(2);
-		System.out.println(javaDequeue(deque,3));
-	
+		/* saveNumberPhone(); */
+		Queue queue = new Queue();
+		for (int i = 0; i < 10; i++) {
+			queue.enqueue(i);
+		}
+		queue.show();
+		System.out.println(queue.dequeue());
+		
+
 	}
 }
