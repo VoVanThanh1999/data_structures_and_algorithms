@@ -17,7 +17,7 @@ public class SinglyLinkedList {
 			this.next = null;
 		}
 	}
-
+	
 	private void insertStart(int data) {
 		ListNode node = new ListNode(data);
 		if (head == null) {

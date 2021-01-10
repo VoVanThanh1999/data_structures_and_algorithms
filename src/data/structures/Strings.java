@@ -1287,6 +1287,65 @@ public class Strings {
 		return temp;
 	}
 
+	static void separateNumbers(String s) {
+		boolean flag = false;
+		String result = "";
+		for (int i = 1; i <= s.length() / 2; i++) {
+			String val = s.substring(0, i);
+			Long num = Long.valueOf(val);
+			result = val;
+			while (val.length() < s.length()) {
+				num++;
+				val += num;
+			}
+			if (val.equals(s)) {
+				flag = true;
+				break;
+			}
+		}
+		System.out.println(flag ? "YES " + result : "NO");
+	}
+
+	static int theLoveLetterMystery(String s) {
+		int count = 0;
+		for (int i = 0, j = s.length() - 1; i < s.length() / 2; i++, j--) {
+			count += Math.abs(s.charAt(i) - s.charAt(j));
+		}
+		return count;
+	}
+
+	static int palindromeIndex(String s) {
+		int left = 0;
+		int right = s.length() - 1;
+		int indexPalindRome = -1;
+		while (left < right) {
+			if (s.charAt(left) != s.charAt(right)) {
+				if (checkPalindRome(left + 1, right, s)) {
+					indexPalindRome = left;
+					break;
+				} else if (checkPalindRome(left, right - 1, s)) {
+					indexPalindRome = right;
+					break;
+				} else {
+					break;
+				}
+			}
+			left++;
+			right--;
+		}
+		return indexPalindRome;
+	}
+
+	static boolean checkPalindRome(int left, int right, String s) {
+		while (left < right) {
+			if (s.charAt(left) != s.charAt(right))
+				return false;
+			left++;
+			right--;
+		}
+		return true;
+	}
+
 	static boolean canMakePalindromeString(String str) {
 		char[] chars = str.toCharArray();
 		Arrays.sort(chars);
@@ -1606,6 +1665,46 @@ public class Strings {
 			val = 8;
 		}
 		return val;
+	}
+
+	static int alternate(String s) {
+		Set<String> set = new HashSet<>();
+		List<String> temp = new ArrayList<>();
+		List<Integer> result = new ArrayList<>();
+		result.add(0);
+		for (int i = 0; i < s.length(); i++) {
+			if (!set.contains(String.valueOf(s.charAt(i)))) {
+				temp.add(String.valueOf(s.charAt(i)));
+				set.add(String.valueOf(s.charAt(i)));
+			}
+		}
+		for (int i = 0; i < temp.size(); i++) {
+			for (int j = i + 1; j < temp.size(); j++) {
+				int lengthResult = checkAlternate(s, temp.get(i), temp.get(j));
+				result.add(lengthResult);
+			}
+		}
+		return Collections.max(result);
+	}
+
+	static int checkAlternate(String s, String a, String b) {
+		boolean flag = true;
+		for (int i = 0; i < s.length(); i++) {
+			String currentS = String.valueOf(s.charAt(i));
+			if (!currentS.equals(a) && !currentS.equals(b)) {
+				s = s.replace(currentS, "");
+				i = 0;
+			}
+		}
+		for (int i = 1; i < s.length(); i++) {
+			if (s.charAt(i) == s.charAt(i - 1)) {
+				return 0;
+			}
+		}
+		if (flag) {
+			return s.length();
+		}
+		return 0;
 	}
 
 	static int countRainbow(String str) {
@@ -2122,6 +2221,43 @@ public class Strings {
 		return stack.isEmpty();
 	}
 
+	static String caesarCipher(String s, int k) {
+		String result = "";
+		String originalAlphabet = "abcdefghijklmnopqrstuvwxyz";
+		StringBuilder alphabetRorated = new StringBuilder("abcdefghijklmnopqrstuvwxyz");
+		for (int i = 0; i < k; i++) {
+			String val = String.valueOf(alphabetRorated.charAt(0));
+			alphabetRorated.deleteCharAt(0);
+			alphabetRorated.append(val);
+
+		}
+		for (int i = 0; i < s.length(); i++) {
+			int indexAscii = s.charAt(i);
+			int index = 0;
+			if (indexAscii > 96 && indexAscii < 123) {
+				for (int j = 0; j < originalAlphabet.length(); j++) {
+					if (s.charAt(i) == originalAlphabet.charAt(j)) {
+						index = j;
+						break;
+					}
+				}
+				result += String.valueOf(alphabetRorated.charAt(index));
+			} else if (indexAscii > 64 && indexAscii < 91) {
+				for (int j = 0; j < originalAlphabet.length(); j++) {
+					if (s.charAt(i) == (originalAlphabet.charAt(j) - 32)) {
+						index = j;
+						break;
+					}
+				}
+				result += String.valueOf(alphabetRorated.charAt(index)).toUpperCase();
+			} else {
+				result += String.valueOf(s.charAt(i));
+			}
+
+		}
+		return result;
+	}
+
 	static public String stringTask2(String str) {
 		String s = ".";
 		for (int i = 0; i < str.length(); i++) {
@@ -2158,8 +2294,357 @@ public class Strings {
 		return rs;
 	}
 
+	static String standardizedName(String name) {
+		String temp = "";
+		boolean flag = false;
+		for (int i = 0; i < name.length(); i++) {
+			if (String.valueOf(name.charAt(i)).equals(" ") && flag == true) {
+				flag = false;
+				temp += " ";
+				continue;
+			} else if (flag == false && !String.valueOf(name.charAt(i)).equals(" ")) {
+				temp += String.valueOf(name.charAt(i)).toUpperCase();
+				flag = true;
+			} else if (flag == true && !String.valueOf(name.charAt(i)).equals(" ")) {
+				temp += String.valueOf(name.charAt(i)).toLowerCase();
+			}
+		}
+
+		while (String.valueOf(temp.charAt(0)).equals(" "))
+			temp = temp.substring(1, temp.length());
+		while (String.valueOf(temp.charAt(temp.length() - 1)).equals(" "))
+			temp = temp.substring(0, temp.length() - 1);
+		return temp;
+	}
+
+	static String genderDetermination(String S) {
+		if (S.length() != 5) {
+			return "";
+		}
+		try {
+			String b[] = S.split("/", 2);
+			int date = Integer.valueOf(b[0]);
+			int mounth = Integer.valueOf(b[1]);
+			if ((date > 0 && date < 11 && mounth % 2 != 0 && mounth < 13)
+					|| mounth < 13 && date < 32 && date > 19 && mounth % 2 != 0) {
+				return "Trống";
+			} else if (date > 9 && date < 26 && mounth % 2 == 0) {
+				return "Mái";
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			return "";
+		}
+
+		return "";
+	}
+
+	static public String enCryption(String s) {
+
+		List<String> strings = new ArrayList<>();
+		double canBatCuaL = Math.sqrt(s.length());
+		int row;
+		int column;
+		if (canBatCuaL % 1 == 0) {
+			row = (int) canBatCuaL;
+			column = (int) row;
+		} else {
+			row = (int) canBatCuaL;
+			column = (int) row + 1;
+		}
+
+		if (row * column < s.length()) {
+			row = Math.max(row, column);
+			column = row;
+		}
+		strings.add((String) s.subSequence(0, column));
+		for (int i = 1; i < row; i++) {
+			int val = column + i * column;
+			if (val < s.length()) {
+				strings.add((String) s.subSequence(i * column, val));
+			} else {
+				strings.add((String) s.subSequence(i * column, s.length()));
+			}
+		}
+
+		int max = strings.get(0).length();
+
+		for (String string : strings)
+			if (max < string.length())
+				max = string.length();
+
+		String[] result = new String[max];
+		for (int i = 0; i < result.length; i++) {
+			result[i] = "";
+		}
+
+		for (int i = 0; i < strings.size(); i++) {
+			for (int j = 0; j < strings.get(i).length(); j++) {
+				result[j] += strings.get(i).charAt(j);
+			}
+		}
+		String temp = "";
+		for (int i = 0; i < column; i++) {
+			temp += result[i] + " ";
+		}
+
+		return temp;
+	}
+
+	public static String timeInWords(int h, int m) {
+		String[] hours = { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven",
+				"twelve" };
+		String[] minute = { "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven",
+				"twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eightenn", "ninteen", "twenty",
+				"twenty one", "twenty two", "twenty three", "twenty four", "twenty five", "twenty six", "twenty seven",
+				"twenty eight", "twenty nine" };
+		String hour = "";
+		if (m == 0) {
+			hour = hours[h - 1];
+			return hour + " " + "o' clock";
+		} else if (m == 1) {
+			hour = hours[h - 1];
+			return "one minute past " + hour;
+		} else if (m == 10) {
+			hour = hours[h - 1];
+			return "ten minute past " + hour;
+		} else if (m == 15) {
+			hour = hours[h - 1];
+			return "quarter past " + hour;
+		} else if (m == 30) {
+			hour = hours[h - 1];
+			return "half past " + hour;
+		} else if (m == 40) {
+			hour = hours[h];
+			return "twenty minutes to " + hour;
+		} else if (m == 45) {
+			hour = hours[h];
+			return "quarter to " + hour;
+		} else if (m < 30) {
+			hour = hours[h - 1];
+			return minute[m - 1] + " minutes past " + hours;
+		} else if (m > 30) {
+			hour = hours[h];
+			return minute[60 - m - 1] + " minutes to " + hour;
+		}
+		return "";
+	}
+
+	static String gridSearch(String[] G, String[] P) {
+		int rowP = P.length;
+		int columnP = P[0].length();
+		for (int i = 0; i <= G.length - rowP; i++) {
+			for (int j = 0; j <= G[i].length() - columnP; j++) {
+				int count = 0;
+				int k2 = i;
+				if (G[i].charAt(j) == P[0].charAt(0)) {
+					for (int k = 0; k < P.length; k++) {
+						if (P[k].equals(G[k2].substring(j, j + columnP))) {
+							count++;
+							k2++;
+						} else {
+							break;
+						}
+					}
+				}
+				if (count == P.length) {
+					return "YES";
+				}
+			}
+		}
+		return "NO";
+	}
+
+	static String[] bomberMan(int n, String[] grid) {
+		int count = 0;
+		Map<String, Integer> map = new HashMap<>();
+
+		while (count < n) {
+			map = denoteBomber(map, grid);
+			grid = plantedBomber(grid);
+			grid = bomsDetroys(map, grid);
+			count++;
+		}
+		return grid;
+	}
+
+	static int makingAnagrams(String s1, String s2) {
+		int cArr[] = new int[26];
+		int cArr1[] = new int[26];
+
+		for (int i = 0; i < s1.length(); i++) {
+			cArr[s1.charAt(i) - 97]++;
+		}
+
+		for (int i = 0; i < s2.length(); i++) {
+			cArr1[s2.charAt(i) - 97]++;
+		}
+		int count = 0;
+		for (int i = 0; i < 26; i++) {
+			count += Math.abs(cArr[i] - cArr1[i]);
+		}
+		return count;
+	}
+
+	static String[] bomsDetroys(Map<String, Integer> map, String[] grid) {
+
+		StringBuilder[] builders = new StringBuilder[grid.length];
+		for (int i = 0; i < builders.length; i++) {
+			builders[i] = new StringBuilder(grid[i]);
+		}
+
+		for (int i = 0; i < builders.length; i++) {
+			for (int j = 0; j < builders[i].length(); j++) {
+				String s = String.valueOf(i) + "-" + String.valueOf(j);
+				if (map.containsKey(s) && map.get(s) >= 2) {
+					// destroy myselt
+					builders[i].setCharAt(j, (char) 46);
+					// destroy top
+					if (i - 1 >= 0) {
+						builders[i - 1].setCharAt(j, (char) 46);
+					}
+					// destroy bottom
+					if (i + 1 < builders.length) {
+						builders[i + 1].setCharAt(j, (char) 46);
+					}
+					// destroy left
+					if (j - 1 >= 0) {
+						builders[i].setCharAt(j - 1, (char) 46);
+					}
+					// destroy right
+					if (j + 1 < builders[i].length()) {
+						builders[i].setCharAt(j + 1, (char) 46);
+					}
+					map.remove(s);
+				}
+			}
+		}
+
+		for (int i = 0; i < builders.length; i++) {
+			grid[i] = builders[i].toString();
+		}
+
+		return grid;
+	}
+
+	static Map<String, Integer> denoteBomber(Map<String, Integer> map, String[] grid) {
+		for (int i = 0; i < grid.length; i++) {
+			for (int j = 0; j < grid[i].length(); j++) {
+				if (grid[i].charAt(j) == 79) {
+					String s = String.valueOf(i) + "-" + String.valueOf(j);
+					if (map.containsKey(s)) {
+						map.put(s, map.get(s) + 1);
+					} else {
+						map.put(s, 0);
+					}
+				}
+			}
+		}
+		return map;
+	}
+
+	static String[] plantedBomber(String[] grid) {
+		for (int i = 0; i < grid.length; i++) {
+			grid[i] = grid[i].replace(".", "O");
+		}
+		return grid;
+	}
+
+	static int anagram(String s) {
+		int len = s.length();
+		int mid = len / 2;
+		int count = 0;
+		if (len % 2 != 0) {
+			return -1;
+		}
+		String s1 = s.substring(0, mid);
+		String s2 = s.substring(mid, len);
+		char[] s1Chars = s1.toCharArray();
+		for (char c : s1Chars) {
+			int index = s2.indexOf(c);
+			if (index == -1) {
+				count++;
+			} else {
+				String text1 = s2.substring(0, index);
+				String text2 = s2.substring(index + 1);
+				s2 = text1 + text2;
+			}
+		}
+		return count;
+	}
+
+	static String gameOfThrones(String s) {
+		int count = 0;
+		Map<Character, Integer> map = new HashMap<>();
+		for (int i = 0; i < s.length(); i++) {
+			map.put(s.charAt(i), 0);
+		}
+		for (int i = 0; i < s.length(); i++) {
+			if (map.containsKey(s.charAt(i))) {
+				map.put(s.charAt(i), map.get(s.charAt(i)) + 1);
+			}
+		}
+		for (Map.Entry<Character, Integer> entry : map.entrySet()) {
+			if (entry.getValue() % 2 != 0) {
+				count++;
+			}
+		}
+		return count > 1 ? "NO" : "YES";
+	}
+
+	static int twoPluses(String[] grid) {
+
+		List<Integer> list = new ArrayList<>();
+		for (int i = 1; i < grid.length; i++) {
+			for (int j = 1; j < grid[i].length(); j++) {
+				int top = i - 1;
+				int bottom = i + 1;
+				int left = j - 1;
+				int right = j + 1;
+				int vertical = 0;
+				int horizontal = 0;
+				int countTop = 0;
+				int countBottom = 0;
+				int countLeft = 0;
+				int countRight = 0;
+				int mid = 1;
+				while (top >= 0 && String.valueOf(grid[top].charAt(j)).equals("G")) {
+					top--;
+					countTop++;
+				}
+				while (bottom < grid.length && String.valueOf(grid[bottom].charAt(j)).equals("G")) {
+					bottom++;
+					countBottom++;
+				}
+				vertical = Math.min(countTop, countBottom) * 2;
+				while (left >= 0 && String.valueOf(grid[i].charAt(left)).equals("G")) {
+					left--;
+					countLeft++;
+				}
+				while (right < grid[i].length() && String.valueOf(grid[i].charAt(right)).equals("G")) {
+					right++;
+					countRight++;
+				}
+				horizontal = Math.min(countLeft, countRight) * 2;
+				if ((vertical + 1) == (horizontal + 1) && (vertical + 1) % 3 == 0) {
+					list.add(vertical * 2 + mid);
+				} else if ((vertical + 1) > 0 && (horizontal + 1) > 0 && (vertical + 1) % 3 == 0
+						&& vertical < horizontal) {
+					list.add(vertical * 2 + mid);
+				} else if ((vertical + 1) > 0 && (horizontal + 1) > 0 && (horizontal + 1) % 3 == 0
+						&& horizontal < vertical) {
+					list.add(horizontal * 2 + mid);
+				} else {
+					list.add(mid);
+				}
+			}
+		}
+
+		return Collections.max(list);
+	}
+
 	public static void main(String[] args) {
-		String s[] = { "321312", "bc", "cd" };
-		System.out.println(vaildPassword(s));
+		String grid[] = { "GBGBGGB", "GBGBGGB", "GBGBGGB", "GGGGGGG", "GGGGGGG", "GBGBGGB", "GBGBGGB" };
+		System.out.println(twoPluses(grid));
 	}
 }

@@ -1,6 +1,7 @@
 package data.structures;
 
 import java.util.HashSet;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
@@ -9,20 +10,85 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Scanner;
 import java.util.Stack;
+import java.util.TreeMap;
 import java.util.stream.Stream;
 import javax.crypto.spec.IvParameterSpec;
 
+import org.graalvm.compiler.lir.amd64.AMD64Arithmetic.FPDivRemOp;
+
+import com.sun.tools.javac.tree.TreeMaker;
+
 public class Array {
 	static Scanner sc = new Scanner(System.in);
+
+	static int jumpingOnClouds(int[] c, int k) {
+		int e = 100;
+		int i = 0;
+		while (true) {
+			if (c[i] == 1) {
+				e = e - 3;
+			} else {
+				e = e - 1;
+			}
+			i = (i + k) % c.length;
+			if (i % c.length == 0) {
+				break;
+			}
+
+		}
+		return e;
+	}
+
+	static int[] acmTeam(String[] topic) {
+		int result[] = new int[2];
+		int count = 1;
+		int max = 0;
+		for (int i = 0; i < topic.length; i++) {
+			for (int j = i + 1; j < topic.length; j++) {
+				int temp = 0;
+				for (int k = 0; k < topic[i].length(); k++) {
+					if (topic[i].charAt(k) == 49 || topic[j].charAt(k) == 49) {
+						temp++;
+					}
+				}
+				if (temp > max) {
+					max = temp;
+					count = 1;
+				} else if (temp == max) {
+					count++;
+				}
+			}
+		}
+		result[0] = max;
+		result[1] = count;
+		return result;
+	}
 
 	static int[] removeArray(int a[], int index) {
 		for (int i = index; i < a.length - 1; i++) {
 			a[i] = a[i + 1];
 		}
 		return a;
+	}
+
+	static int designerPdfViewer(int[] h, String word) {
+		Map<Character, Integer> map = new HashMap<>();
+		for (int i = 0; i < 26; i++) {
+			map.put((char) (97 + i), i);
+		}
+		int max = 0;
+		for (int i = 0; i < word.length(); i++) {
+			int indexCharacter = map.get(word.charAt(i));
+			if (h[indexCharacter] > max) {
+				max = h[indexCharacter];
+			}
+		}
+		return max * word.length();
 	}
 
 	static void AddArray(int a[], int n) {
@@ -36,6 +102,28 @@ public class Array {
 		for (int i = 0; i < n; i++) {
 			System.out.print(a[i] + "\t");
 		}
+	}
+
+	static int[] circularArrayRotation(int[] a, int k, int[] queries) {
+		int array[] = new int[queries.length];
+		Queue<Integer> queue = new LinkedList<Integer>();
+		for (int i = a.length - 1; i >= 0; i--) {
+			queue.offer(a[i]);
+		}
+		int c = 0;
+		while (c < k) {
+			int val = queue.poll();
+			queue.offer(val);
+			c++;
+		}
+		for (int i = a.length - 1; i >= 0; i--) {
+			a[i] = queue.poll();
+		}
+
+		for (int i = 0; i < array.length; i++) {
+			array[i] = a[queries[i]];
+		}
+		return array;
 	}
 
 	static int[] addValueInArray(int a[], int index, int v, int n) {
@@ -525,6 +613,35 @@ public class Array {
 		}
 		if (r > i) {
 			quickSort(a, i, r);
+		}
+		return a;
+	}
+
+	static int[] quickSortDecrease(int a[], int l, int r) {
+		int pivot = a[l];
+		int i = l;
+		int j = r;
+		int temp = 0;
+		while (i <= j) {
+			while (pivot < a[i]) {
+				i++;
+			}
+			while (pivot > a[j]) {
+				j--;
+			}
+			if (i <= j) {
+				temp = a[i];
+				a[i] = a[j];
+				a[j] = temp;
+				i++;
+				j--;
+			}
+		}
+		if (l < j) {
+			quickSortDecrease(a, l, j);
+		}
+		if (r > i) {
+			quickSortDecrease(a, i, r);
 		}
 		return a;
 	}
@@ -2217,7 +2334,7 @@ public class Array {
 		StringBuffer st = new StringBuffer(s);
 		int l = 0;
 		for (int i = st.length(); i > 1; i--) {
-			if (Character.isDigit(st.charAt(i)) && Integer.valueOf(st.toString().charAt(l)) ==0) {
+			if (Character.isDigit(st.charAt(i)) && Integer.valueOf(st.toString().charAt(l)) == 0) {
 				int val = Integer.valueOf(st.toString().charAt(l));
 				st.deleteCharAt(i);
 				st.insert(i, val);
@@ -2225,22 +2342,799 @@ public class Array {
 				l++;
 			}
 			if (String.valueOf(st.toString().charAt(i)).equals("*")) {
-				String val1 = String.valueOf(st.charAt(i-1));
-				String val2 = String.valueOf(st.charAt(i-2));
-				st.deleteCharAt(i-1);
-				st.insert(i-1, val2);
-				st.deleteCharAt(i-2);
-				st.insert(i-2, val1);
+				String val1 = String.valueOf(st.charAt(i - 1));
+				String val2 = String.valueOf(st.charAt(i - 2));
+				st.deleteCharAt(i - 1);
+				st.insert(i - 1, val2);
+				st.deleteCharAt(i - 2);
+				st.insert(i - 2, val1);
 				st.deleteCharAt(i);
 			}
 		}
 		return st.toString();
 	}
 
-	public static void main(String[] args) {
-		int a[] = { 18, 22, -3, 13, 39, 2, 12, 33, 40, 33, 20, -3 };
+	String whoWouldWin(long cat_a, long mouse, long cat_b) {
+		long indexCatA = mouse - cat_a;
+		long indexCatB = mouse - cat_b;
+		if (Math.abs(indexCatA) < Math.abs(indexCatB))
+			return "Cat A";
+		else if (Math.abs(indexCatA) > Math.abs(indexCatB)) {
+			return "Cat B";
+		}
+		return "2 con bang nhau";
 
-		System.out.println(decryptPassword("51Pa*0Lp*0e"));
+	}
+
+	public static int getTotalX(List<Integer> a, List<Integer> b) {
+		Collections.sort(a);
+		Collections.sort(b);
+		int maxA = a.get(a.size() - 1);
+		int minB = b.get(0);
+		int count = 0;
+		List<Integer> list = new ArrayList<>();
+		for (int i = maxA; i <= minB; i++) {
+			boolean flag = true;
+			for (Integer integer : a) {
+				if (i % integer != 0) {
+					flag = false;
+				}
+			}
+			if (flag) {
+				list.add(i);
+			}
+		}
+		for (Integer integer : list) {
+			boolean flag = true;
+			for (Integer integer2 : b) {
+				if (integer2 % integer != 0) {
+					flag = false;
+				}
+			}
+			if (flag) {
+				count++;
+			}
+		}
+		return count;
+	}
+
+	static int formingMagicSquare(int[][] s) {
+		List<Integer> integers = new ArrayList<>();
+		for (int i = 0; i < magicSquares().size(); i++) {
+			int costTemp = 0;
+			for (int j = 0; j < 3; j++) {
+				for (int k = 0; k < 3; k++) {
+					costTemp += Math.abs(s[j][k] - magicSquares().get(i)[j][k]);
+				}
+			}
+			integers.add(Math.abs(costTemp));
+
+		}
+
+		return Collections.min(integers);
+	}
+
+	public static List<Integer> deleteDuplicateArrayList(List<Integer> list) {
+		Set<Integer> set = new HashSet<>();
+		List<Integer> integers = new ArrayList<>();
+		for (int i = 0; i < list.size(); i++) {
+			if (!set.contains(list.get(i))) {
+				integers.add(list.get(i));
+				set.add(list.get(i));
+			}
+		}
+		return integers;
+	}
+
+	public static List<Integer> climbingLeaderboard(List<Integer> ranked, List<Integer> player) {
+		ranked = deleteDuplicateArrayList(ranked);
+		List<Integer> list = new ArrayList<>();
+		int index = ranked.size() - 1;
+		for (int i = 0; i < player.size(); i++) {
+			while (index >= 0 && player.get(i) >= ranked.get(index)) {
+				index--;
+			}
+			list.add(index + 2);
+		}
+
+		return list;
+
+	}
+
+	public static int nonDivisibleSubset(int k, List<Integer> s) {
+
+	}
+
+	static int queensAttack(int n, int k, int r_q, int c_q, int[][] obstacles) {
+
+		Set<String> set = new HashSet<>();
+
+		for (int i = 0; i < k; i++) {
+			int row = obstacles[i][0];
+			int col = obstacles[i][1];
+			String s = String.valueOf(row) + "-" + String.valueOf(col);
+			set.add(s);
+		}
+
+		int sum = 0;
+		int horseRow = r_q;
+		int hourseColumd = c_q;
+		// move top
+		while (horseRow < n) {
+			horseRow += 1;
+			if (isObstacles(horseRow, hourseColumd, set)) {
+				break;
+			}
+			sum += 1;
+		}
+		// move boottom
+		horseRow = r_q;
+		hourseColumd = c_q;
+		while (horseRow > 1) {
+			horseRow -= 1;
+			if (isObstacles(horseRow, hourseColumd, set)) {
+				break;
+			}
+			sum += 1;
+		}
+		// move right
+		horseRow = r_q;
+		hourseColumd = c_q;
+		while (hourseColumd < n) {
+			hourseColumd += 1;
+			if (isObstacles(horseRow, hourseColumd, set)) {
+				break;
+			}
+			sum += 1;
+		}
+		// move left
+		horseRow = r_q;
+		hourseColumd = c_q;
+		while (hourseColumd > 1) {
+			hourseColumd -= 1;
+			if (isObstacles(horseRow, hourseColumd, set)) {
+				break;
+			}
+			sum += 1;
+		}
+		// move top right
+		horseRow = r_q;
+		hourseColumd = c_q;
+		while (horseRow < n && hourseColumd < n) {
+			horseRow += 1;
+			hourseColumd += 1;
+			if (isObstacles(horseRow, hourseColumd, set)) {
+				break;
+			}
+			sum += 1;
+		}
+		// move top left
+		horseRow = r_q;
+		hourseColumd = c_q;
+		while (horseRow < n && hourseColumd > 1) {
+			horseRow += 1;
+			hourseColumd -= 1;
+			if (isObstacles(horseRow, hourseColumd, set)) {
+				break;
+			}
+			sum += 1;
+		}
+		// move bottom left
+		horseRow = r_q;
+		hourseColumd = c_q;
+		while (horseRow > 1 && hourseColumd > 1) {
+			horseRow--;
+			hourseColumd--;
+			if (isObstacles(horseRow, hourseColumd, set)) {
+				break;
+			}
+			sum += 1;
+		}
+		// move bottom right
+		horseRow = r_q;
+		hourseColumd = c_q;
+		while (horseRow > 1 && hourseColumd < n) {
+			horseRow--;
+			hourseColumd++;
+			if (isObstacles(horseRow, hourseColumd, set)) {
+				break;
+			}
+			sum += 1;
+
+		}
+
+		return sum;
+	}
+
+	static boolean isObstacles(int r, int c, Set<String> set) {
+		String s = String.valueOf(r) + "-" + String.valueOf(c);
+		if (set.contains(s)) {
+			return true;
+		}
+		return false;
+	}
+
+	static int binarySerch(List<Integer> list, int key) {
+
+		int l = 0;
+		int r = list.size() - 1;
+		int m = (l + r) / 2;
+		while (l < r) {
+			int val = list.get(m);
+			if (list.get(m) == key) {
+				return m;
+			}
+			if (val < key) {
+				r = m;
+			} else {
+				l = m + 1;
+			}
+			m = (l + r) / 2;
+		}
+		if (list.get(m) == key) {
+			return m;
+		}
+		return -1;
+	}
+
+	static String organizingContainers(int[][] container) {
+
+		List<Long> countSumTypeBalls = new ArrayList<>();
+		List<Long> countCapcity = new ArrayList<>();
+
+		for (int i = 0; i < container.length; i++) {
+			long sumTypeBall = 0;
+			long sumCapcity = 0;
+			for (int j = 0; j < container[i].length; j++) {
+				sumTypeBall += container[i][j];
+				sumCapcity += container[j][i];
+			}
+			countSumTypeBalls.add(sumTypeBall);
+			countCapcity.add(sumCapcity);
+		}
+
+		Collections.sort(countSumTypeBalls);
+		Collections.sort(countCapcity);
+
+		for (int i = 0; i < countCapcity.size(); i++) {
+			System.out.println(countCapcity.get(i) + " " + countSumTypeBalls.get(i));
+			if (countCapcity.get(i) == countSumTypeBalls.get(i)) {
+				System.out.println(i);
+			}
+
+		}
+		return "Possible";
+	}
+
+	static List<int[][]> magicSquares() {
+		List<int[][]> list = new ArrayList<>();
+
+		int[][] i1 = { { 4, 9, 2 }, { 3, 5, 7 }, { 8, 1, 6 } };
+		int[][] i2 = { { 2, 9, 4 }, { 7, 5, 3 }, { 6, 1, 8 } };
+		int[][] i3 = { { 8, 1, 6 }, { 3, 5, 7 }, { 4, 9, 2 } };
+		int[][] i4 = { { 6, 1, 8 }, { 7, 5, 3 }, { 2, 9, 4 } };
+
+		int[][] i5 = { { 8, 3, 4 }, { 1, 5, 9 }, { 6, 7, 2 } };
+		int[][] i6 = { { 6, 7, 2 }, { 1, 5, 9 }, { 8, 3, 4 } };
+		int[][] i7 = { { 4, 3, 8 }, { 9, 5, 1 }, { 2, 7, 6 } };
+		int[][] i8 = { { 2, 7, 6 }, { 9, 5, 1 }, { 4, 3, 8 } };
+
+		list.add(i1);
+		list.add(i2);
+		list.add(i3);
+		list.add(i4);
+		list.add(i5);
+		list.add(i6);
+		list.add(i7);
+		list.add(i8);
+		return list;
+	}
+
+	static public String enCryption(String s) {
+
+		List<String> strings = new ArrayList<>();
+		double canBatCuaL = Math.sqrt(s.length());
+		int row;
+		int column;
+		if (canBatCuaL % 1 == 0) {
+			row = (int) canBatCuaL;
+			column = (int) row;
+		} else {
+			row = (int) canBatCuaL;
+			column = (int) row + 1;
+		}
+
+		if (row * column < s.length()) {
+			row = Math.max(row, column);
+			column = row;
+		}
+		strings.add((String) s.subSequence(0, column));
+		for (int i = 1; i < row; i++) {
+			int val = column + i * column;
+			if (val < s.length()) {
+				strings.add((String) s.subSequence(i * column, val));
+			} else {
+				strings.add((String) s.subSequence(i * column, s.length()));
+			}
+		}
+
+		int max = strings.get(0).length();
+
+		for (String string : strings)
+			if (max < string.length())
+				max = string.length();
+
+		String[] result = new String[max];
+		for (int i = 0; i < result.length; i++) {
+			result[i] = "";
+		}
+
+		for (int i = 0; i < strings.size(); i++) {
+			for (int j = 0; j < strings.get(i).length(); j++) {
+				result[j] += strings.get(i).charAt(j);
+			}
+		}
+		String temp = "";
+		for (int i = 0; i < column; i++) {
+			temp += result[i] + " ";
+		}
+
+		return temp;
+	}
+
+	static int[] permutationEquation(int[] p) {
+		int count = 1;
+		List<Integer> temp1 = new ArrayList<>();
+		for (int i = 0; i < p.length; i++) {
+			for (int j = 0; j < p.length; j++) {
+				int temp = 0;
+				if (p[j] == count) {
+					temp = j;
+					count++;
+					temp1.add(temp + 1);
+					break;
+				}
+
+			}
+		}
+		List<Integer> temp2 = new ArrayList<>();
+		for (int i = 0; i < p.length; i++) {
+			for (int j = 0; j < p.length; j++) {
+				int temp = 0;
+				if (temp1.get(i).equals(p[j])) {
+					temp = j;
+					temp2.add(temp + 1);
+					break;
+				}
+
+			}
+		}
+		int a[] = new int[temp2.size()];
+		for (int i = 0; i < a.length; i++) {
+			a[i] = temp2.get(i);
+		}
+		return a;
+	}
+
+	static boolean binarySearch(List<Integer> list, int key) {
+		int l = 0;
+		int r = list.size() - 1;
+		while (l <= r) {
+			int m = (l + r) / 2;
+			if (list.get(m) == key) {
+				return true;
+			}
+			if (list.get(m) < key) {
+				l = m + 1;
+			} else {
+				r = m - 1;
+			}
+		}
+		return false;
+	}
+
+	static int workbook(int n, int k, int[] arr) {
+		List<ArrayList<Integer>> list = new ArrayList<>();
+		int countSpecialExample = 0;
+		for (int i = 0; i < n; i++) {
+			int val = arr[i];
+			int count = 0;
+			ArrayList<Integer> arrayList = new ArrayList<>();
+			for (int j = 1; j <= val; j++) {
+				if (count < k && j <= val) {
+					arrayList.add(j);
+				} else if (count < val) {
+					list.add(arrayList);
+					count = 0;
+					arrayList = new ArrayList<>();
+					arrayList.add(j);
+				}
+				count++;
+			}
+			if (!arrayList.isEmpty()) {
+				list.add(arrayList);
+			}
+		}
+		for (int i = 0; i < list.size(); i++) {
+			boolean s = binarySearch(list.get(i), i + 1);
+			if (s) {
+				countSpecialExample += 1;
+			}
+		}
+		return countSpecialExample;
+	}
+
+	static String[] cavityMap(String[] grid) {
+		StringBuilder[] stringBuilder = new StringBuilder[grid.length];
+		for (int i = 0; i < stringBuilder.length; i++) {
+			stringBuilder[i] = new StringBuilder(grid[i]);
+		}
+		for (int i = 1; i < stringBuilder.length - 1; i++) {
+			for (int j = 1; j < stringBuilder[i].length() - 1; j++) {
+				int top = stringBuilder[i - 1].toString().charAt(j);
+				int bottom = stringBuilder[i + 1].toString().charAt(j);
+				int left = stringBuilder[i].toString().charAt(j - 1);
+				int right = stringBuilder[i].toString().charAt(j + 1);
+				int center = stringBuilder[i].toString().charAt(j);
+				if (top < center && bottom < center && right < center && left < center) {
+					stringBuilder[i].deleteCharAt(j);
+					stringBuilder[i].insert(j, "X");
+				}
+			}
+		}
+		for (int i = 0; i < grid.length; i++) {
+			grid[i] = stringBuilder[i].toString();
+		}
+		return grid;
+	}
+
+	static long strangeCounter(long t) {
+		long s = 1;
+		while (t > s) {
+			t -= 3;
+			s += 3;
+		}
+		return s;
+	}
+
+	static String[] bigSorting(String[] unsorted) {
+		String[] s = quickSortString(unsorted, 0, unsorted.length - 1);
+		return s;
+	}
+
+	static String[] quickSortString(String[] s, int l, int r) {
+		int i = l;
+		int j = r;
+		String pivot = s[l];
+		while (i <= j) {
+			while (isS1BigThanS2(pivot, s[i])) {
+				i++;
+			}
+			while (isS1BigThanS2(s[j], pivot)) {
+				j--;
+			}
+			if (i <= j) {
+				String t = s[i];
+				s[i] = s[j];
+				s[j] = t;
+				i++;
+				j--;
+			}
+		}
+		if (j > l) {
+			quickSortString(s, l, j);
+		}
+		if (i < r) {
+			quickSortString(s, i, r);
+		}
+		return s;
+	}
+
+	static boolean isS1BigThanS2(String s1, String s2) {
+		if (s1.length() > s2.length()) {
+			return true;
+		} else if (s2.length() > s1.length()) {
+			return false;
+		} else {
+			for (int i = 0; i < s1.length(); i++) {
+				if (Integer.valueOf(s1.charAt(i)) > Integer.valueOf(s2.charAt(i))) {
+					return true;
+				} else if (Integer.valueOf(s1.charAt(i)) < Integer.valueOf(s2.charAt(i))) {
+					return false;
+				}
+			}
+		}
+		return false;
+
+	}
+
+	static int[] absolutePermutation(int n, int k) {
+		int ans[] = new int[n];
+		int no[] = { -1 };
+		Set<Integer> set = new HashSet<>();
+		// Logic Math check + i = k => check = k-i; check - i = k => check = k+i and
+		// check = {1-n};
+		for (int i = 0; i < n; i++) {
+			int a = (i + 1) - k;
+			int b = (i + 1) + k;
+			if (a >= 1 && a <= n && !set.contains(a)) {
+				ans[i] = a;
+				set.add(a);
+			} else if (b >= 1 && b <= n && !set.contains(b)) {
+				ans[i] = b;
+				set.add(b);
+			} else {
+				return no;
+			}
+		}
+		return ans;
+
+	}
+
+	static void almostSorted(int[] a) {
+		int arr[] = new int[a.length];
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = a[i];
+		}
+		if (checkArraySorted(arr)) {
+			System.out.println("yes");
+			return;
+		}
+		int l = 0;
+		int r = 0;
+		for (int i = 1; i < arr.length; i++) {
+			if (arr[i] < arr[i - 1]) {
+				int t = arr[i];
+				arr[i] = arr[i - 1];
+				arr[i - 1] = t;
+				l = i - 1;
+				r = i;
+				break;
+			}
+		}
+
+		if (checkArraySorted(arr)) {
+			System.out.println("yes");
+			System.out.println("swap " + (l + 1) + " " + (r + 1));
+			return;
+		}
+
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = a[i];
+		}
+
+		for (int i = 1; i < arr.length - 1; i++) {
+			if (a[i] > a[i - 1] && a[i] > a[i + 1]) {
+				l = i;
+				break;
+			}
+		}
+		for (int i = l + 2; i < arr.length - 1; i++) {
+			if (a[i] < a[i - 1] && a[i] < a[i + 1]) {
+				r = i;
+				break;
+			}
+		}
+		int t = arr[l];
+		arr[l] = arr[r];
+		arr[r] = t;
+		if (checkArraySorted(arr)) {
+			System.out.println("yes");
+			System.out.println("swap " + (l + 1) + " " + (r + 1));
+			return;
+		}
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = a[i];
+		}
+		for (int i = arr.length - 1; i > 0; i--) {
+			if (arr[i] < arr[i - 1]) {
+				r = i;
+				break;
+			}
+		}
+		int b = r;
+		for (int i = r; i > 0; i--) {
+			if (arr[i] > arr[i - 1]) {
+				l = i;
+				break;
+			}
+		}
+		int len = r;
+		for (int i = l; i <= len; i++) {
+			arr[i] = a[r];
+			r--;
+		}
+		if (checkArraySorted(arr)) {
+			System.out.println("yes");
+			System.out.print("reverse " + (l + 1) + " " + (b + 1));
+			return;
+		} else {
+			System.out.println("no");
+			return;
+		}
+	}
+
+	static boolean checkArraySorted(int a[]) {
+		for (int i = 1; i < a.length; i++)
+			if (a[i] < a[i - 1])
+				return false;
+		return true;
+	}
+
+	static int surfaceArea(int[][] A) {
+		int row = A.length;// 2
+		int length = A[0].length;// 3
+		int area = row * length * 2;
+		// left-righr
+		for (int i = 0; i < length; i++) {
+			area += A[0][i];
+			area += A[row - 1][i];
+			if (row > 1) {
+				area += Math.max(0, A[0][i] - A[1][i]);
+				area += Math.max(0, A[row - 1][i] - A[row - 2][i]);
+			}
+
+		}
+		// west east
+		for (int i = 0; i < row; i++) {
+			area += A[i][0];
+			area += A[i][length - 1];
+			if (length > 1) {
+				area += Math.max(0, A[i][0] - A[i][1]);
+				area += Math.max(0, A[i][length - 1] - A[i][length - 2]);
+			}
+		}
+		for (int i = 1; i < row - 1; i++) {
+			for (int j = 0; j < length; j++) {
+				area += Math.max(0, A[i][j] - A[i - 1][j]);
+				area += Math.max(0, A[i][j] - A[i + 1][j]);
+			}
+		}
+
+		for (int i = 1; i < length - 1; i++) {
+			for (int j = 0; j < row; j++) {
+				area += Math.max(0, A[j][i] - A[j][i + 1]);
+				area += Math.max(0, A[j][i] - A[j][i - 1]);
+			}
+		}
+		return area;
+	}
+
+	static BigInteger gridlandMetro(long n, long m, int k, long[][] track) {
+
+		long a[][] = new long[(int) n][(int) m];
+		int rowTrack = track.length;
+		int left = 1;
+		int right = 2;
+		long count = 0;
+		Set<String> strings = new HashSet<>();
+
+		for (int i = 0; i < rowTrack; i++) {
+			for (int j = 0; j < m; j++) {
+				String s = track[i][0] + "-" + j;
+				if (((j + 1) < track[i][left] || track[i][right] < (j + 1)) && !strings.contains(s)) {
+					a[(int) (track[i][0] - 1)][j] = 0;
+				} else {
+					a[(int) (track[i][0] - 1)][j] = 1;
+					strings.add(s);
+				}
+			}
+		}
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < m; j++) {
+				if (a[i][j] == 0) {
+					count++;
+				}
+			}
+		}
+		return BigInteger.valueOf(count);
+	}
+
+	// Complete the connectedCell function below.
+	static int connectedCell(int[][] matrix) {
+		int len = matrix.length;
+		int max = 0;
+
+		for (int i = 0; i < len; i++) {
+			for (int j = 0; j < matrix[i].length; j++) {
+				if (matrix[i][j] == 1) {
+					int value = count_region_celss(i, j, matrix);
+					max = Math.max(max, value);
+				}
+
+			}
+		}
+		return max;
+	}
+
+	private static int count_region_celss(int i, int j, int[][] matrix) {
+		if (i < 0 || i >= matrix.length || j < 0 || j >= matrix[0].length || matrix[i][j] == 0) {
+			return 0;
+		}
+		matrix[i][j] = 0;
+		int count = 1;
+
+		for (int k = i - 1; k <= i + 1; k++) {
+			for (int k2 = j - 1; k2 <= j + 1; k2++) {
+				count += count_region_celss(k, k2, matrix);
+			}
+		}
+
+		return count;
+	}
+
+	static String larrysArray(int[] A) {
+		boolean flag = true;
+		for (int i = 0; i < A.length; i++) {
+			int target = findTargetLarrysArray(A, (i + 1));
+			if (target > i + 3) {
+
+			}
+		}
+	}
+
+	private static int findTargetLarrysArray(int[] a, int i) {
+		for (int j = 0;; j++) {
+			if (a[j] == i) {
+				return j;
+			}
+		}
+	}
+
+	static int lilysHomework(int[] arr) {
+		TreeMap<Integer, Integer> forWard = new TreeMap<>();
+		TreeMap<Integer, Integer> backWard = new TreeMap<>();
+		int[] arrayCurrent = new int[arr.length];
+
+		int countForWard = 0;
+		int countBackWard = 0;
+
+		for (int i = 0; i < arr.length; i++) {
+			forWard.put(arr[i], i);
+			backWard.put(arr[i], i);
+			arrayCurrent[i] = arr[i];
+		}
+
+		for (int i = 0; i < arr.length; i++) {
+			if (arrayCurrent[i] != forWard.firstKey()) {
+				int currentIndex = forWard.get(forWard.firstKey());
+				int temp = arrayCurrent[i];
+
+				arrayCurrent[i] = arrayCurrent[currentIndex];
+				arrayCurrent[currentIndex] = temp;
+				forWard.put(arrayCurrent[currentIndex], currentIndex);
+				countForWard++;
+			}
+			forWard.remove(forWard.firstKey());
+		}
+
+		arrayCurrent = arr;
+
+		for (int i = arr.length - 1; i >= 0; i--) {
+			if (arrayCurrent[i] != backWard.firstKey()) {
+				int currentIndex = backWard.get(backWard.firstKey());
+				int temp = arrayCurrent[i];
+
+				arrayCurrent[i] = arrayCurrent[currentIndex];
+				arrayCurrent[currentIndex] = temp;
+				backWard.put(arrayCurrent[currentIndex], currentIndex);
+				countBackWard++;
+			}
+			backWard.remove(backWard.firstKey());
+		}
+
+		return Math.min(countForWard, countBackWard);
+	}
+
+	static int maxMin(int k, int[] arr) {
+
+	}
+
+	public static void main(String[] args) {
+		int a = 15;
+		int	b = a;
+		b = 13;
+		System.out.println(a);
 	}
 
 }
