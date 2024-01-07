@@ -11,5 +11,5 @@ Chào mừng bạn đến với HackerRank-Algorithms-Solutions! Đây là một
 
 Mỗi thư mục đại diện cho một loại bài thuật toán và chứa giải pháp tương ứng. Tên file thường liên quan đến tên bài toán.
 
-## Tài khoản của tôi
-[Hackerank](https://www.hackerrank.com/profile/mrt_boss)
+## Tài khoản
+My Profile [Hackerank](https://www.hackerrank.com/profile/mrt_boss)
